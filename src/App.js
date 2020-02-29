@@ -3,8 +3,8 @@ import './App.css';
 // import logo from './logo.svg'
 function App() {
 
-  let img1 = 'src/static/images/1.png';
-  let img2 = 'src/static/images/2.png';
+  let img1 = 'src/static/images/1.jpg';
+  let img2 = 'src/static/images/2.jpg';
   return (
     <div className="App">
       <header className="App-header">
