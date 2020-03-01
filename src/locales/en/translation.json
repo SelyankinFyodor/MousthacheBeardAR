@@ -3,5 +3,7 @@
   "ru": "Russian",
   "english": "English",
   "eng": "English",
-  "select Language": "Select Language"
+  "selected Language": "English",
+  "content": "Сontent",
+  "footer": "Footer"
 }

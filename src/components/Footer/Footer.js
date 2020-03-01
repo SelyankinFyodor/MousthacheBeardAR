@@ -1,5 +1,6 @@
 import React from "react";
+import {withNamespaces} from "react-i18next";
 
-const Footer = () =>(<div>Footer</div>);
+const Footer = ({t}) =>(<div>{t("footer")}</div>);
 
-export default Footer;
+export default withNamespaces()(Footer);

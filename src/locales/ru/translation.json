@@ -3,6 +3,7 @@
   "ru": "Русский",
   "english": "Английский",
   "eng": "Английский",
-  "select Language": "Выберите язык"
-
+  "selected Language": "Русский",
+  "content": "Контент",
+  "footer": "Подвал"
 }
