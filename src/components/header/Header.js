@@ -1,8 +1,6 @@
 import React    from "react";
-import LanguageSelector from "./LanguageSelector/LanguageSelector";
+import LanguageSelector from "./LanguageSelector";
 import Image from 'react-bootstrap/Image'
-// import logo from "../../static/images/mustache-no-shadow-logo.png"
-import logo from "../../static/images/mustahceTree.png"
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
@@ -11,6 +9,7 @@ import {withWidth} from "@material-ui/core";
 import Hidden from "@material-ui/core/Hidden";
 import {makeStyles} from "@material-ui/core/styles";
 
+import {Icons, Common} from '../../imports'
 
 const theme = createMuiTheme({
     typography: {
@@ -27,9 +26,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Languages = [
-    {lang: "ru", icon: "src/static/images/russia-flag.png"},
-    {lang: "eng", icon: "src/static/images/united-kingdom-flag.png"}
-    ];
+    {lang: "ru", icon: Icons['ru']},
+    {lang: "eng", icon: Icons['uk']},
+];
 
 const Header =()=> {
     const classes = useStyles();
@@ -39,7 +38,7 @@ const Header =()=> {
                 alignItems="center"
             >
                 <Grid item>
-                    <Image src={logo} width={200} height={100}/>
+                    <Image src={Common.logo} width={200} height={100}/>
                 </Grid>
                 <Hidden smDown>
                     <Grid item>
