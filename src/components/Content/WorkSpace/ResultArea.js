@@ -41,8 +41,6 @@ const ResultArea = ()=>{
         }
     }, [FaceImg]);
 
-    useEffect(()=>{console.log('sosal')},[])
-
     const handleImage = async (image = FaceImg) => {
         await getFullFaceDescription(image).then(fDes => {
             console.log(fDes.length)
