@@ -6,12 +6,13 @@ import face002 from './static/images/faces/face002.jpg'
 import face003 from './static/images/faces/face003.jpg'
 import face004 from './static/images/faces/face004.jpg'
 import face005 from './static/images/faces/face005.jpg'
-import face006 from './static/images/faces/face006.jpg'
-import face007 from './static/images/faces/face007.jpg'
 
-import mustache001 from './static/images/mustaches/mustache.png'
+import moustache001 from './static/images/moustaches/moustache001.png'
+import moustache002 from './static/images/moustaches/moustache002.png'
+import moustache003 from './static/images/moustaches/moustache003.png'
+import moustache004 from './static/images/moustaches/moustache004.png'
 
-import logo from "./static/images/mustahceTree.png"
+import logo from "./static/images/moustahceTree.png"
 
 export const Icons = {
     ru: rusFlagIcon,
@@ -23,13 +24,14 @@ export const Faces = [
     face002,
     face003,
     face004,
-    face005,
-    face006,
-    face007
+    face005
 ];
 
-export const Mustaches =[
-    mustache001
+export const Moustaches =[
+    moustache001,
+    moustache002,
+    moustache003,
+    moustache004
 ];
 
 export const Common ={

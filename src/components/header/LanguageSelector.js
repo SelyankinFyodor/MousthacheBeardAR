@@ -1,6 +1,6 @@
 import React from 'react'
 import i18n from '../../i18n'
-import { withNamespaces } from 'react-i18next';
+import {withNamespaces} from 'react-i18next';
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -28,7 +28,7 @@ const LanguageSelector = ({Languages , t}) => {
     const [lang, setLang] = React.useState("ru");
 
     return (
-        <FormControl className={classes.formControl}>
+        <FormControl className={classes.formControl}  >
             <Select value={lang}  onChange={changeLanguage} >
                 {Languages.map(el => (<MenuItem value={el.lang} key={el.lang} onClick={() => changeLanguage(el.lang)}  className={classes.text}>
                     <img src={el.icon} alt="icon" width={20}/>

@@ -5,5 +5,7 @@
   "eng": "Английский",
   "selected Language": "Русский",
   "content": "Контент",
-  "footer": "Подвал"
+  "footer": "Подвал",
+  "Next" : "Вперед",
+  "Back" : "Назад"
 }
