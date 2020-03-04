@@ -1,30 +1,18 @@
 import React from 'react';
 import './App.css';
-// import logo from './logo.svg'
-function App() {
+import Header from "./components/header/Header";
+import Content from "./components/Content/Content";
+import './i18n';
+import {withNamespaces} from 'react-i18next';
 
-  let img1 = 'src/static/images/1.png';
-  let img2 = 'src/static/images/2.png';
+const App = ({t}) => {
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={img1} className="App-logo" alt="logo" />
-        <img src={img2} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-
-      </header>
+        <Header/>
+        <Content/>
     </div>
-  );
+  )
 }
 
-export default App;
+export default withNamespaces()(App);

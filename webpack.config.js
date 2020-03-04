@@ -5,7 +5,7 @@ module.exports = {
   entry: "./src/index.js",
   output: {
     path: path.join(__dirname, "/dist"),
-    filename: "index-bundle.js"
+    filename: "./public/bundle.js",
   },
   module: {
     rules: [
@@ -22,7 +22,7 @@ module.exports = {
         test: /\.(jpg|jpeg|gif|png)$/,
         include: path.resolve(__dirname, "src/static/images"),
         loader:'url-loader?limit=1024&name=images/[name].[ext]'
-      }
+      },
     ]
   },
   plugins: [
