@@ -1,6 +1,9 @@
 import React from 'react'
+import {withNamespaces} from "react-i18next";
+import ResultArea from "./WorkSpace/ResultArea";
 
-const Content = ()=> (<div>
-    Content
+const Content = ({t})=> (<div>
+    <ResultArea/>
+    {t("content")}
 </div>);
-export default Content;
+export default withNamespaces()(Content);
