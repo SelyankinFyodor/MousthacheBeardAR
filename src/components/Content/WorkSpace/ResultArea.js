@@ -1,16 +1,17 @@
 import React, {useEffect} from 'react';
-import { loadModels, getFullFaceDescription } from './face-api-func';
+import {getFullFaceDescription, loadModels} from './face-api-func';
 import ResultCompose from "./ResultCompose";
-import Input from '@material-ui/core/Input';
+import {Input} from '@material-ui/core';
+import Carousel from '../Carousel/Carousel'
+// Import image to test API
+import {Faces, Moustaches} from '../../../imports'
+import Grid from "@material-ui/core/Grid";
 // or
 
-// Import image to test API
-import {Faces, Mustaches} from '../../../imports'
-const testImg = Faces[3];
-const testMus = Mustaches[0];
 
 const ResultArea = ()=>{
-    const [imageURL, setImageURL] = React.useState(testImg);
+    const [FaceImg, setFaceImg] = React.useState(Faces[0]);
+    const [MoustacheImg, setMoustacheImg] = React.useState(Moustaches[0]);
     const [nose, setNose] = React.useState(null);
     const [lips, setLips] = React.useState(null);
     const [models, setModels] = React.useState(false);
@@ -20,7 +21,7 @@ const ResultArea = ()=>{
             try {
                 console.log('load models')
                 await loadModels();
-                await handleImage(imageURL);
+                await handleImage(FaceImg);
                 setModels(true);
             } catch (e) {
             }
@@ -28,7 +29,7 @@ const ResultArea = ()=>{
         async function reload() {
             try {
                 console.log('new image');
-                await handleImage(imageURL);
+                await handleImage(FaceImg);
             } catch (e) {
             }
         }
@@ -38,11 +39,13 @@ const ResultArea = ()=>{
         else{
             reload();
         }
-    }, [imageURL]);
+    }, [FaceImg]);
 
+    useEffect(()=>{console.log('sosal')},[])
 
-    const handleImage = async (image = imageURL) => {
+    const handleImage = async (image = FaceImg) => {
         await getFullFaceDescription(image).then(fDes => {
+            console.log(fDes.length)
             if (!!fDes) {
                 getMustacheArea(fDes[0].landmarks.positions);
             }
@@ -61,7 +64,7 @@ const ResultArea = ()=>{
     const handleFileChange = async event => {
         resetState();
         //will update with useEffect
-        await setImageURL(URL.createObjectURL(event.target.files[0]));
+        await setFaceImg(URL.createObjectURL(event.target.files[0]));
     };
 
     const resetState = () => {
@@ -71,16 +74,35 @@ const ResultArea = ()=>{
 
     return (
         <div>
-            <Input
-                id="myFileUpload"
-                type="file"
-                onChange={handleFileChange}
-                accept=".jpg, .jpeg, .png"
-            />
-            <div style={{ position: 'relative' }}>
-                <ResultCompose mustacheUrl={testMus} ImageURl={imageURL} nose={nose} lips={lips}/>
-            </div>
-        </div>);
+            <Grid container alignItems="center" direction='row'>
+                <Grid item xs={6}>
+                    <div style={{ position: 'relative' }}>
+                        <ResultCompose mustacheUrl={MoustacheImg} ImageURl={FaceImg} nose={nose} lips={lips}/>
+                    </div>
+                </Grid>
+                <Grid item container xs={6} direction="column">
+                    <Grid item xs={4}>
+                        {/*<InputLabel*/}
+                        {/*variant='standard'>*/}
+                        <Input
+                            id="upload-photo"
+                            name="upload-photo"
+                            type="file"
+                            onChange={handleFileChange}
+                            accept=".jpg, .jpeg, .png"
+                            disableUnderline={true}
+                        />
+                    </Grid>
+                    <Grid item xs>
+                        <Carousel Images={Faces} setImage={setFaceImg}/>
+                    </Grid>
+                    <Grid item xs>
+                        <Carousel Images={Moustaches} setImage={setMoustacheImg}/>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </div>
+    );
 };
 
 export default ResultArea;

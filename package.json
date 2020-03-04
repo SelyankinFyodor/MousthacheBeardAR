@@ -40,6 +40,8 @@
     ]
   },
   "devDependencies": {
-    "i18next": "^19.3.2"
+    "@material-ui/icons": "^4.9.1",
+    "i18next": "^19.3.2",
+    "react-md": "^1.15.1"
   }
 }

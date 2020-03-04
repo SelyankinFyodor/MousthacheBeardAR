@@ -1,15 +1,14 @@
-import React    from "react";
+import React from "react";
 import LanguageSelector from "./LanguageSelector";
 import Image from 'react-bootstrap/Image'
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
+import {createMuiTheme, makeStyles, ThemeProvider} from '@material-ui/core/styles';
 import Box from "@material-ui/core/Box";
 import {withWidth} from "@material-ui/core";
 import Hidden from "@material-ui/core/Hidden";
-import {makeStyles} from "@material-ui/core/styles";
 
-import {Icons, Common} from '../../imports'
+import {Common, Icons} from '../../imports'
 
 const theme = createMuiTheme({
     typography: {
@@ -17,6 +16,7 @@ const theme = createMuiTheme({
         fontFamily:['Tangerine']
     },
 });
+
 const useStyles = makeStyles(theme => ({
     header:{
         border: 0,
