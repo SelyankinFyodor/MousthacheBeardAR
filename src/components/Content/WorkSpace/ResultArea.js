@@ -3,15 +3,17 @@ import {getFullFaceDescription, loadModels} from './face-api-func';
 import ResultCompose from "./ResultCompose";
 import {Input} from '@material-ui/core';
 import Carousel from '../Carousel/Carousel'
+import CarouselForMoustages from '../Carousel/Carousel'
 // Import image to test API
-import {Faces, Moustaches} from '../../../imports'
+import {Faces, Moustaches, MoustachePngs} from '../../../imports'
 import Grid from "@material-ui/core/Grid";
 // or
 
 
 const ResultArea = ()=>{
     const [FaceImg, setFaceImg] = React.useState(Faces[0]);
-    const [MoustacheImg, setMoustacheImg] = React.useState(Moustaches[0]);
+    const [MoustacheImg, setMoustacheImg] = React.useState(MoustachePngs[0]);
+    const [MegaMoustageImg, setMegaMoustacheImg] = React.useState(Moustaches[0]);
     const [nose, setNose] = React.useState(null);
     const [lips, setLips] = React.useState(null);
     const [models, setModels] = React.useState(false);
@@ -53,7 +55,7 @@ const ResultArea = ()=>{
     const getMustacheArea = area => {
         if (!!area){
             const indicesNoseHor = [31, 32, 33, 34, 35];
-            const indicesLipsUpU = [48, 49, 50, 51, 52, 53, 54];
+            const indicesLipsUpU = [48, 49, 50, 51, 52, 53, 54];    
             setNose(indicesNoseHor.map(el => area[el]));
             setLips(indicesLipsUpU.map(el => area[el]));
         }
@@ -75,7 +77,7 @@ const ResultArea = ()=>{
             <Grid container alignItems="center" direction='row'>
                 <Grid item xs={6}>
                     <div style={{ position: 'relative' }}>
-                        <ResultCompose mustacheUrl={MoustacheImg} ImageURl={FaceImg} nose={nose} lips={lips}/>
+                        <ResultCompose mustacheUrl={MegaMoustageImg} ImageURl={FaceImg} nose={nose} lips={lips}/>
                     </div>
                 </Grid>
                 <Grid item container xs={6} direction="column">
@@ -95,7 +97,7 @@ const ResultArea = ()=>{
                         <Carousel Images={Faces} setImage={setFaceImg}/>
                     </Grid>
                     <Grid item xs>
-                        <Carousel Images={Moustaches} setImage={setMoustacheImg}/>
+                        <CarouselForMoustages Images={Moustaches} setImage={setMegaMoustacheImg}/>
                     </Grid>
                 </Grid>
             </Grid>
