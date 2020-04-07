@@ -1,15 +1,16 @@
 import React, {useEffect} from 'react';
 import {getFullFaceDescription, loadModels} from './face-api-func';
 import ResultCompose from "./ResultCompose";
-import {Input} from '@material-ui/core';
+import {withNamespaces} from "react-i18next";
+import withWidth from '@material-ui/core/withWidth';
+import './ResultArea.css'
+import { makeStyles } from '@material-ui/core/styles';
 import Carousel from '../Carousel/Carousel'
-// Import image to test API
 import {Faces, Moustaches} from '../../../imports'
 import Grid from "@material-ui/core/Grid";
-// or
+import {Container} from "@material-ui/core";
 
-
-const ResultArea = ()=>{
+const ResultArea = ({t, width})=>{
     const [FaceImg, setFaceImg] = React.useState(Faces[0]);
     const [MoustacheImg, setMoustacheImg] = React.useState(Moustaches[0]);
     const [nose, setNose] = React.useState(null);
@@ -17,38 +18,37 @@ const ResultArea = ()=>{
     const [models, setModels] = React.useState(false);
 
     useEffect(() => {
-        async function loading() {
+        const handleImage = async (image = FaceImg) => {
+            await getFullFaceDescription(image, image.size).then(fDes => {
+                if (!!fDes) {
+                    getMustacheArea(fDes[0].landmarks.positions);
+                }
+            });
+        };
+
+        const loading = async ()=> {
             try {
-                console.log('load models')
+                console.log('load models');
                 await loadModels();
                 await handleImage(FaceImg);
                 setModels(true);
-            } catch (e) {
-            }
-        }
-        async function reload() {
+            } catch (e) {}
+        };
+
+        const reload = async () =>{
             try {
                 console.log('new image');
                 await handleImage(FaceImg);
-            } catch (e) {
-            }
-        }
+            } catch (e) {}
+        };
+
         if (!models){
-            loading();
+            loading().then();
         }
         else{
-            reload();
+            reload().then();
         }
-    }, [FaceImg]);
-
-    const handleImage = async (image = FaceImg) => {
-        await getFullFaceDescription(image).then(fDes => {
-            console.log(fDes.length)
-            if (!!fDes) {
-                getMustacheArea(fDes[0].landmarks.positions);
-            }
-        });
-    };
+    }, [FaceImg, models]);
 
     const getMustacheArea = area => {
         if (!!area){
@@ -61,7 +61,6 @@ const ResultArea = ()=>{
 
     const handleFileChange = async event => {
         resetState();
-        //will update with useEffect
         await setFaceImg(URL.createObjectURL(event.target.files[0]));
     };
 
@@ -72,24 +71,21 @@ const ResultArea = ()=>{
 
     return (
         <div>
-            <Grid container alignItems="center" direction='row'>
+            <Grid container direction={width === 'xs' || width === 'sm'? 'column' : 'row'}>
                 <Grid item xs={6}>
-                    <div style={{ position: 'relative' }}>
+                    <Container>
                         <ResultCompose mustacheUrl={MoustacheImg} ImageURl={FaceImg} nose={nose} lips={lips}/>
-                    </div>
+                    </Container>
                 </Grid>
-                <Grid item container xs={6} direction="column">
+                <Grid item container xs={6} alignItems='center' direction='column'>
                     <Grid item xs={4}>
-                        {/*<InputLabel*/}
-                        {/*variant='standard'>*/}
-                        <Input
-                            id="upload-photo"
-                            name="upload-photo"
-                            type="file"
-                            onChange={handleFileChange}
-                            accept=".jpg, .jpeg, .png"
-                            disableUnderline={true}
-                        />
+                        <div className="upload-btn-wrapper">
+                            <button className="btn">{t('upload photo')}</button>
+                            <input type="file" name="myfile"
+                                   onChange={handleFileChange}
+                                   accept=".jpg, .jpeg, .png"
+                            />
+                        </div>
                     </Grid>
                     <Grid item xs>
                         <Carousel Images={Faces} setImage={setFaceImg}/>
@@ -103,4 +99,4 @@ const ResultArea = ()=>{
     );
 };
 
-export default ResultArea;
+export default withNamespaces()(withWidth()(ResultArea));

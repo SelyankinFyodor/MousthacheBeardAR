@@ -38,7 +38,7 @@ const Carousel= ({Images, setImage, t})=> {
     const handleBack = () => {
         setActiveStep(prevActiveStep => prevActiveStep - 1);
     };
-    useEffect(()=>{setImage(Images[activeStep])},[activeStep])
+    useEffect(()=>{setImage(Images[activeStep])},[activeStep, Images , setImage]);
 
     return (
         <div className={classes.root}>
@@ -67,5 +67,5 @@ const Carousel= ({Images, setImage, t})=> {
             />
         </div>
     );
-}
+};
 export default withNamespaces()(Carousel);
