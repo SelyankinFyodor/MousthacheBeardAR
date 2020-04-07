@@ -4,11 +4,9 @@ import ResultCompose from "./ResultCompose";
 import {withNamespaces} from "react-i18next";
 import withWidth from '@material-ui/core/withWidth';
 import './ResultArea.css'
-import { makeStyles } from '@material-ui/core/styles';
 import Carousel from '../Carousel/Carousel'
 import {Faces, Moustaches} from '../../../imports'
 import Grid from "@material-ui/core/Grid";
-import {Container} from "@material-ui/core";
 
 const ResultArea = ({t, width})=>{
     const [FaceImg, setFaceImg] = React.useState(Faces[0]);
@@ -72,13 +70,11 @@ const ResultArea = ({t, width})=>{
     return (
         <div>
             <Grid container direction={width === 'xs' || width === 'sm'? 'column' : 'row'}>
-                <Grid item xs={6}>
-                    <Container>
+                <Grid item container xs={12} sm={6} alignItems='center' direction='column'>
+                    <Grid item md>
                         <ResultCompose mustacheUrl={MoustacheImg} ImageURl={FaceImg} nose={nose} lips={lips}/>
-                    </Container>
-                </Grid>
-                <Grid item container xs={6} alignItems='center' direction='column'>
-                    <Grid item xs={4}>
+                    </Grid>
+                    <Grid item md>
                         <div className="upload-btn-wrapper">
                             <button className="btn">{t('upload photo')}</button>
                             <input type="file" name="myfile"
@@ -87,11 +83,13 @@ const ResultArea = ({t, width})=>{
                             />
                         </div>
                     </Grid>
-                    <Grid item xs>
-                        <Carousel Images={Faces} setImage={setFaceImg}/>
-                    </Grid>
-                    <Grid item xs>
+                </Grid>
+                <Grid item container xs={12} sm={6} alignItems='center' direction='column' justify='space-between'>
+                    <Grid item xs={6} sm={3}>
                         <Carousel Images={Moustaches} setImage={setMoustacheImg}/>
+                    </Grid>
+                    <Grid item xs={6} sm={3}>
+                        <Carousel Images={Faces} setImage={setFaceImg}/>
                     </Grid>
                 </Grid>
             </Grid>
