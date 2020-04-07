@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import {withNamespaces} from "react-i18next";
+import withWidth from '@material-ui/core/withWidth';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -21,11 +22,11 @@ const useStyles = makeStyles(theme => ({
     img: {
         overflow: 'hidden',
         display: 'block',
-        width: '100%',
+        width:'100%'
     },
 }));
 
-const Carousel= ({Images, setImage, t})=> {
+const Carousel= ({Images, setImage, t, width})=> {
     const classes = useStyles();
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
@@ -42,30 +43,30 @@ const Carousel= ({Images, setImage, t})=> {
 
     return (
         <div className={classes.root}>
-            <img
-                className={classes.img}
-                src={Images[activeStep]}
-                alt={':('}
-            />
+                <img
+                    className={classes.img}
+                    src={Images[activeStep]}
+                    alt={':('}
+                />
             <MobileStepper
                 steps={maxSteps}
                 position="static"
-                variant="text"
+                variant={width === 'xs' || width === 'sm'? 'none' : 'dots'}
                 activeStep={activeStep}
                 nextButton={
                     <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
-                        {t('Next')}
+                        {width === 'xs' || width === 'sm'? '' : t('Next')}
                         {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
                     </Button>
                 }
                 backButton={
                     <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
                         {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-                        {t('Back')}
+                        {width === 'xs' || width === 'sm'? '' : t('Back')}
                     </Button>
                 }
             />
         </div>
     );
 };
-export default withNamespaces()(Carousel);
+export default withNamespaces()(withWidth()(Carousel));
