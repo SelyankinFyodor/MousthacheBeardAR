@@ -2,13 +2,15 @@ import React, {useEffect} from 'react';
 import {getFullFaceDescription, loadModels} from './face-api-func';
 import ResultCompose from "./ResultCompose";
 import {withNamespaces} from "react-i18next";
+import withWidth from '@material-ui/core/withWidth';
 import './ResultArea.css'
+import { makeStyles } from '@material-ui/core/styles';
 import Carousel from '../Carousel/Carousel'
 import {Faces, Moustaches} from '../../../imports'
 import Grid from "@material-ui/core/Grid";
+import {Container} from "@material-ui/core";
 
-
-const ResultArea = ({t})=>{
+const ResultArea = ({t, width})=>{
     const [FaceImg, setFaceImg] = React.useState(Faces[0]);
     const [MoustacheImg, setMoustacheImg] = React.useState(Moustaches[0]);
     const [nose, setNose] = React.useState(null);
@@ -24,22 +26,22 @@ const ResultArea = ({t})=>{
             });
         };
 
-        async function loading() {
+        const loading = async ()=> {
             try {
                 console.log('load models');
                 await loadModels();
                 await handleImage(FaceImg);
                 setModels(true);
-            } catch (e) {
-            }
-        }
-        async function reload() {
+            } catch (e) {}
+        };
+
+        const reload = async () =>{
             try {
                 console.log('new image');
                 await handleImage(FaceImg);
-            } catch (e) {
-            }
-        }
+            } catch (e) {}
+        };
+
         if (!models){
             loading().then();
         }
@@ -69,16 +71,14 @@ const ResultArea = ({t})=>{
 
     return (
         <div>
-            <Grid container alignItems="center" direction='row'>
+            <Grid container direction={width === 'xs' || width === 'sm'? 'column' : 'row'}>
                 <Grid item xs={6}>
-                    <div style={{ position: 'relative' }}>
+                    <Container>
                         <ResultCompose mustacheUrl={MoustacheImg} ImageURl={FaceImg} nose={nose} lips={lips}/>
-                    </div>
+                    </Container>
                 </Grid>
-                <Grid item container xs={6} direction="column">
+                <Grid item container xs={6} alignItems='center' direction='column'>
                     <Grid item xs={4}>
-                        {/*<InputLabel*/}
-                        {/*variant='standard'>*/}
                         <div className="upload-btn-wrapper">
                             <button className="btn">{t('upload photo')}</button>
                             <input type="file" name="myfile"
@@ -99,4 +99,4 @@ const ResultArea = ({t})=>{
     );
 };
 
-export default withNamespaces()(ResultArea);
+export default withNamespaces()(withWidth()(ResultArea));

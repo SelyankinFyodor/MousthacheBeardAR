@@ -33,27 +33,27 @@ const Languages = [
 const Header =()=> {
     const classes = useStyles();
     return (<div className={classes.header}>
-            <Grid
-                container
-                alignItems="center"
-            >
-                <Grid item>
-                    <Image src={Common.logo} width={200} height={100}/>
-                </Grid>
-                <Hidden smDown>
-                    <Grid item>
-                        <ThemeProvider theme={theme}>
-                            <Typography theme={theme}>Mustache Beard AR</Typography>
-                        </ThemeProvider>
-                    </Grid>
-                </Hidden>
-                <Grid item xs>
-                    <Box display="flex" flexDirection="row-reverse" bgcolor="background.paper">
-                        <LanguageSelector Languages={Languages}/>
-                    </Box>
-                </Grid>
+        <Grid
+            container
+            alignItems="center"
+        >
+            <Grid item xs>
+                <Image src={Common.logo} width={200} height={100}/>
             </Grid>
-        </div>)
+            <Grid item xs>
+                <Hidden xsDown>
+                    <ThemeProvider theme={theme}>
+                        <Typography theme={theme}>Mustache Beard AR</Typography>
+                    </ThemeProvider>
+                </Hidden>
+            </Grid>
+            <Grid item xs>
+                <Box display="flex" flexDirection="row-reverse" bgcolor="background.paper">
+                    <LanguageSelector Languages={Languages}/>
+                </Box>
+            </Grid>
+        </Grid>
+    </div>)
 };
 
 export default withWidth()(Header);
