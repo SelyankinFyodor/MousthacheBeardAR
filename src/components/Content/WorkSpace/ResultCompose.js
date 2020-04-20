@@ -63,7 +63,7 @@ const ResultCompose = ({ImageURl, mustacheUrl, nose, lips, width})=>{
             let angle = Math.atan(
                 ((lips[6].y - lips[0].y)/(lips[6].x - lips[0].x) + (nose[4].y - nose[0].y)/(nose[4].x - nose[0].x))/2);
             let mWidth= measure * Math.sqrt(
-                (lips[6].x - lips[0].x)*(lips[6].x - lips[0].x)+(lips[6].y - lips[0].y)*(lips[6].y - lips[0].y)) * 1.5;
+                (lips[6].x - lips[0].x)*(lips[6].x - lips[0].x)+(lips[6].y - slips[0].y)*(lips[6].y - lips[0].y)) * 1.5;
             let mHeight = measure * Math.sqrt(
                 (lips[3].y - nose[2].y)*(lips[3].y - nose[2].y) + (lips[3].x - nose[2].x)*(lips[3].x - nose[2].x));
 
@@ -72,7 +72,7 @@ const ResultCompose = ({ImageURl, mustacheUrl, nose, lips, width})=>{
             setMoustacheX(measure * ((nose.reduce((sum, cur)=>{return sum + cur.x}, 0) +
                 lips.reduce((sum, cur)=>{return sum + cur.x}, 0))/12) - mWidth/2 * Math.cos(angle) + mHeight/2 * Math.sin(angle));
             setMAngle((180/Math.PI)*angle);
-            setMoustacheHeight(mHeight);
+            setMoustacheHeight(mWidth);
             setMoustacheWidth(mWidth);
         }
     },[lips, nose, measure]);
