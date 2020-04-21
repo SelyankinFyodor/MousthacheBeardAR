@@ -12,6 +12,8 @@ import moustache001 from './static/images/moustaches/moustache001.png'
 import moustache002 from './static/images/moustaches/moustache002.png'
 import moustache003 from './static/images/moustaches/moustache003.png'
 import moustache004 from './static/images/moustaches/moustache004.png'
+import moustache005 from './static/images/moustaches/moustache005.png'
+import moustache006 from './static/images/moustaches/moustache006.png'
 
 import logo from "./static/images/moustahceTree.png"
 
@@ -33,7 +35,9 @@ export const Moustaches =[
     moustache001,
     moustache002,
     moustache003,
-    moustache004
+    moustache004,
+    moustache005,
+    moustache006
 ];
 
 export const Common ={

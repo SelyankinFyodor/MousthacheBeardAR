@@ -72,7 +72,7 @@ const ResultCompose = ({ImageURl, mustacheUrl, nose, lips, width})=>{
             setMoustacheX(measure * ((nose.reduce((sum, cur)=>{return sum + cur.x}, 0) +
                 lips.reduce((sum, cur)=>{return sum + cur.x}, 0))/12) - mWidth/2 * Math.cos(angle) + mHeight/2 * Math.sin(angle));
             setMAngle((180/Math.PI)*angle);
-            setMoustacheHeight(mHeight);
+            setMoustacheHeight(mWidth);
             setMoustacheWidth(mWidth);
         }
     },[lips, nose, measure]);
