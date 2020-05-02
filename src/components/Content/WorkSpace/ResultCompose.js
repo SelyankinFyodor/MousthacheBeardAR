@@ -1,10 +1,10 @@
 import React, {useEffect, useState, useLayoutEffect} from 'react'
 import {Image, Layer, Stage} from 'react-konva';
 import useImage from 'use-image';
-import withWidth from "@material-ui/core/withWidth";
+import PropTypes from 'prop-types';
 
 
-const ResultCompose = ({ImageURl, mustacheUrl, nose, lips, width})=>{
+const ResultCompose = ({ImageURl, mustacheUrl, nose, lips})=>{
     const [image1]=useImage(ImageURl);
     const [image2]=useImage(mustacheUrl);
 
@@ -52,6 +52,7 @@ const ResultCompose = ({ImageURl, mustacheUrl, nose, lips, width})=>{
 
     useEffect(()=>{
         const get_coefficient = (img) =>{
+
             if (!img) return 1;
             return stageSize/(img.height > img.width ? img.height : img.width);
         };
@@ -97,7 +98,7 @@ const ResultCompose = ({ImageURl, mustacheUrl, nose, lips, width})=>{
             x={stageX}
             y={stageY}
         >
-            {!!image1 ?
+            {image1 ?
                 <Layer>
                     <Image
                         image={image1}
@@ -119,4 +120,12 @@ const ResultCompose = ({ImageURl, mustacheUrl, nose, lips, width})=>{
         </Stage>
     );
 };
-export default withWidth()(ResultCompose);
+
+ResultCompose.propTypes = {
+    ImageURl: PropTypes.string,
+    mustacheUrl: PropTypes.string,
+    nose: PropTypes.array,
+    lips: PropTypes.array
+}
+
+export default ResultCompose;

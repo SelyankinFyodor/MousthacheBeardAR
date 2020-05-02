@@ -8,7 +8,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import PropTypes from 'prop-types';
 import Hidden from "@material-ui/core/Hidden";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
     formControl: {
         // margin: theme.spacing(1),
         minWidth: 120,
@@ -43,7 +43,8 @@ LanguageSelector.propTypes = {
     Languages : PropTypes.arrayOf(PropTypes.exact({
         lang: PropTypes.string,
         icon: PropTypes.string
-    }))
+    })),
+    t : PropTypes.any
 };
 
 

@@ -17,7 +17,7 @@ const theme = createMuiTheme({
     },
 });
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
     header:{
         border: 0,
         borderRadius: 3,

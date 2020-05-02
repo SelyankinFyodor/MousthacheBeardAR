@@ -7,6 +7,7 @@ import './ResultArea.css'
 import Carousel from '../Carousel/Carousel'
 import {Faces, Moustaches} from '../../../imports'
 import Grid from "@material-ui/core/Grid";
+import PropTypes from 'prop-types';
 
 const ResultArea = ({t, width})=>{
     const [FaceImg, setFaceImg] = React.useState(Faces[0]);
@@ -18,7 +19,7 @@ const ResultArea = ({t, width})=>{
     useEffect(() => {
         const handleImage = async (image = FaceImg) => {
             await getFullFaceDescription(image, image.size).then(fDes => {
-                if (!!fDes) {
+                if (fDes) {
                     getMustacheArea(fDes[0].landmarks.positions);
                 }
             });
@@ -30,6 +31,7 @@ const ResultArea = ({t, width})=>{
                 await loadModels();
                 await handleImage(FaceImg);
                 setModels(true);
+                // eslint-disable-next-line no-empty
             } catch (e) {}
         };
 
@@ -37,6 +39,7 @@ const ResultArea = ({t, width})=>{
             try {
                 console.log('new image');
                 await handleImage(FaceImg);
+                // eslint-disable-next-line no-empty
             } catch (e) {}
         };
 
@@ -49,7 +52,7 @@ const ResultArea = ({t, width})=>{
     }, [FaceImg, models]);
 
     const getMustacheArea = area => {
-        if (!!area){
+        if (area){
             const indicesNoseHor = [31, 32, 33, 34, 35];
             const indicesLipsUpU = [48, 49, 50, 51, 52, 53, 54];
             setNose(indicesNoseHor.map(el => area[el]));
@@ -96,5 +99,10 @@ const ResultArea = ({t, width})=>{
         </div>
     );
 };
+
+ResultArea.propTypes = {
+    t: PropTypes.func,
+    width: PropTypes.string
+}
 
 export default withNamespaces()(withWidth()(ResultArea));
