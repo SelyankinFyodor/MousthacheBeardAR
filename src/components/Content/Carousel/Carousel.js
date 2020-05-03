@@ -6,6 +6,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import {withNamespaces} from "react-i18next";
 import withWidth from '@material-ui/core/withWidth';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -39,7 +40,10 @@ const Carousel= ({Images, setImage, t, width})=> {
     const handleBack = () => {
         setActiveStep(prevActiveStep => prevActiveStep - 1);
     };
-    useEffect(()=>{setImage(Images[activeStep])},[activeStep, Images , setImage]);
+    useEffect(()=>{
+        console.log(typeof setImage)
+        setImage(Images[activeStep])
+    },[activeStep, Images , setImage]);
 
     return (
         <div className={classes.root}>
@@ -69,4 +73,12 @@ const Carousel= ({Images, setImage, t, width})=> {
         </div>
     );
 };
+
+Carousel.propTypes = {
+    Images: PropTypes.arrayOf(PropTypes.string),
+    setImage: PropTypes.func,
+    t: PropTypes.func,
+    width: PropTypes.string
+}
+
 export default withNamespaces()(withWidth()(Carousel));
