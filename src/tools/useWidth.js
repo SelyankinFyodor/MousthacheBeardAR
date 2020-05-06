@@ -1,5 +1,9 @@
 import {useEffect, useState} from "react";
 
+/**
+ * hook of window width
+ * @returns {{width: (number), height: (number)}}
+ */
 export default () => {
     const isClient = typeof window === 'object';
 
