@@ -9,6 +9,12 @@ import {Faces, Moustaches} from '../../../imports'
 import Grid from "@material-ui/core/Grid";
 import PropTypes from 'prop-types';
 
+/**
+ * @param {Object} args - destructing object
+ * @param {function} args.t - translation function provided by i18n
+ * @param args.width - width provider
+ * @returns {jsx}
+ */
 const ResultArea = ({t, width})=>{
     const [FaceImg, setFaceImg] = React.useState(Faces[0]);
     const [MoustacheImg, setMoustacheImg] = React.useState(Moustaches[0]);

@@ -1,5 +1,5 @@
 import React from "react";
-import LanguageSelector from "./LanguageSelector";
+import LanguageSelector from "../../tools/LanguageSelector";
 import Image from 'react-bootstrap/Image'
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -10,6 +10,9 @@ import Hidden from "@material-ui/core/Hidden";
 
 import {Common, Icons} from '../../imports'
 
+/**
+ * @ignore
+ */
 const theme = createMuiTheme({
     typography: {
         fontSize:30,
@@ -17,6 +20,10 @@ const theme = createMuiTheme({
     },
 });
 
+/**
+ * styles for header
+ * @type {function():{header:{}}}
+ */
 const useStyles = makeStyles(() => ({
     header:{
         border: 0,
@@ -24,12 +31,19 @@ const useStyles = makeStyles(() => ({
         boxShadow: '0 3px 5px 2px rgba(0, 0, 0, .3)',
     }
 }));
-
+/**
+ * @type {{icon:string, lang: string}[]}
+ */
 const Languages = [
     {lang: "ru", icon: Icons['ru']},
     {lang: "eng", icon: Icons['uk']},
 ];
 
+/**
+ * Header of the app
+ * @returns {jsx}
+ * @constructor
+ */
 const Header =()=> {
     const classes = useStyles();
 

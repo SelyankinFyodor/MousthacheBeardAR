@@ -4,7 +4,10 @@ import {reactI18nextModule} from 'react-i18next';
 import translationEN from './locales/en/translation.json';
 import translationRU from './locales/ru/translation.json';
 
-// the translations
+/**
+ * the translations path
+ * @type {{ru: {translation: {russian: string, ru: string, english: string, eng: string, "selected Language": string, content: string, footer: string, Next: string, Back: string, "upload photo": string}}, eng: {translation: {russian: string, ru: string, english: string, eng: string, "selected Language": string, content: string, footer: string, Next: string, Back: string, "upload photo": string}}}}
+ */
 const resources = {
   eng: {
     translation: translationEN,

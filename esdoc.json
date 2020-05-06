@@ -1,0 +1,16 @@
+{
+  "source": "./src",
+  "include": "./src/components/Header/",
+  "destination": "./esdoc",
+  "excludes": ["serviceWorker.js"],
+  "plugins": [
+    {"name": "esdoc-standard-plugin",
+    "option": {
+      "unexportIdentifier": true,
+      "unexportedIdentifier": {"enable": true}
+    }},
+    {"name": "esdoc-react-plugin"},
+    {"name": "esdoc-jsx-plugin", "option": {"enable": true}},
+    {"name": "esdoc-undocumented-identifier-plugin", "option": {"enable": true}}
+  ]
+}

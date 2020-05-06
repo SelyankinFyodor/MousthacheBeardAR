@@ -1,5 +1,5 @@
 import React from 'react'
-import i18n from '../../i18n'
+import i18n from '../i18n'
 import {withNamespaces} from 'react-i18next';
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -8,6 +8,10 @@ import {makeStyles} from "@material-ui/core/styles";
 import PropTypes from 'prop-types';
 import Hidden from "@material-ui/core/Hidden";
 
+/**
+ *
+ * @param theme - theme.
+ */
 const useStyles = makeStyles(() => ({
     formControl: {
         // margin: theme.spacing(1),
@@ -18,7 +22,13 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-
+/**
+ * @param {Object} args - destructing object.
+ * @param {{lang:string, icon:string}[]} args.Languages - array of languages and icons.
+ * @param {function} args.t -translation function provided by i18n
+ * @returns {*}
+ * @constructor
+ */
 const LanguageSelector = ({Languages , t}) => {
     const changeLanguage = event => {
         i18n.changeLanguage(event.target.value);
@@ -44,7 +54,7 @@ LanguageSelector.propTypes = {
         lang: PropTypes.string,
         icon: PropTypes.string
     })),
-    t : PropTypes.any
+    t : PropTypes.func
 };
 
 

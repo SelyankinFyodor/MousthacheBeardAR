@@ -8,6 +8,10 @@ import {withNamespaces} from "react-i18next";
 import withWidth from '@material-ui/core/withWidth';
 import PropTypes from 'prop-types';
 
+/**
+ * styles for carousel
+ * @type {function(props?: any): Object}
+ */
 const useStyles = makeStyles(theme => ({
     root: {
         maxWidth: 400,
@@ -27,6 +31,14 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+/**
+ * @param args -destructing object
+ * @param {<string>[]>} args.Images - set of pictures for the carousel
+ * @param {function} args.setImage - hook function from the parent component that sets the picture to its state
+ * @param {function} args.t - translation function provided by i18n
+ * @param {function} args.width - width provider
+ * @returns {jsx}
+ */
 const Carousel= ({Images, setImage, t, width})=> {
     const classes = useStyles();
     const theme = useTheme();

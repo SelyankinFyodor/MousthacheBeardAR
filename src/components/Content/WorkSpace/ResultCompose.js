@@ -3,7 +3,17 @@ import {Image, Layer, Stage} from 'react-konva';
 import useImage from 'use-image';
 import PropTypes from 'prop-types';
 
-
+/**
+ * inserts facial hair onto the face using the provided coordinates of the nose and upper lip
+ *
+ * @param {Object} args - destructing object
+ * @param {string} args.ImageURl - path for Face preset image
+ * @param {string} args.mustacheUrl - path for Moustache image
+ * @param {Array<number, number>} args.nose - array of nose coordinates
+ * @param {Array<number, number>} args.lips - array of upper lip coordinates
+ * @returns {jsx}
+ * @constructor
+ */
 const ResultCompose = ({ImageURl, mustacheUrl, nose, lips})=>{
     const [image1]=useImage(ImageURl);
     const [image2]=useImage(mustacheUrl);
@@ -124,7 +134,10 @@ const ResultCompose = ({ImageURl, mustacheUrl, nose, lips})=>{
 ResultCompose.propTypes = {
     ImageURl: PropTypes.string,
     mustacheUrl: PropTypes.string,
-    nose: PropTypes.array,
+    nose: PropTypes.arrayOf(PropTypes.shape({
+        x: PropTypes.number,
+        y: PropTypes.number
+    })),
     lips: PropTypes.array
 }
 
