@@ -1,9 +1,13 @@
-// import React from 'react';
-// import {render} from '@testing-library/react';
-// import App from './App';
-// //
-// // test('renders learn react link', () => {
-// //   const {getByText} = render(<App />);
-// //   const linkElement = getByText(/learn react/i);
-// //   expect(linkElement).toBeInTheDocument();
-// // });
+import App from './App'
+import renderer from 'react-test-renderer';
+import React from "react";
+
+test('app component should create', ()=>{
+  const appComponent = renderer.create(
+      <App />,
+  ).toJSON()
+  expect(appComponent).toBeTruthy();
+})
+
+
+

@@ -25,12 +25,19 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "jest": "jest",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.js",
     "doc": "esdoc -c esdoc.json"
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/fileMock.js"
+    }
   },
   "browserslist": {
     "production": [
@@ -45,7 +52,10 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
     "@material-ui/icons": "^4.9.1",
+    "babel-jest": "^26.0.1",
     "esdoc": "^1.1.0",
     "esdoc-ecmascript-proposal-plugin": "^1.0.0",
     "esdoc-jsx-plugin": "^1.0.0",
@@ -63,9 +73,12 @@
     "eslint-plugin-react": "^7.19.0",
     "husky": "^4.2.5",
     "i18next": "^19.3.2",
+    "jest": "^26.0.1",
+    "jest-react": "^0.11.1",
     "lint-staged": "^10.2.2",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
-    "react-md": "^1.15.1"
+    "react-md": "^1.15.1",
+    "react-test-renderer": "^16.13.1"
   }
 }
