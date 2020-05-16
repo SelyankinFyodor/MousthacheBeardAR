@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl">
+  <title data-ice="title">Home | test</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-App">App</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-resources">resources</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Common">Common</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Faces">Faces</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Icons">Icons</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Moustaches">Moustaches</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-content">components/Content</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Content">Content</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-content-carousel">components/Content/Carousel</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Carousel">Carousel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-useStyles">useStyles</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-content-workspace">components/Content/WorkSpace</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ResultArea">ResultArea</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ResultCompose">ResultCompose</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getFullFaceDescription">getFullFaceDescription</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadModels">loadModels</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-header">components/Header</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Header">Header</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Languages">Languages</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-useStyles">useStyles</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#tools">tools</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-LanguageSelector">LanguageSelector</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-useWidth">useWidth</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-useStyles">useStyles</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="musthachebeardar">MusthacheBeardAR</h1><p><img src="http://pngimg.com/uploads/moustache/moustache_PNG18.png" alt="Background image"></p>
+<h2 id="purpose">Purpose</h2><p>This project has two important functions:</p>
+<ol>
+<li>determine the future location of the mustache</li>
+<li>mustache / beard render</li>
+</ol>
+<p>you can select predefined photo, or load from device</p>
+<h2 id="limitations">Limitations</h2><h2 id="prerequisites">Prerequisites</h2><h3 id="node-js-and-tools">Node.js and Tools</h3><p>Download link:
+<a href="https://nodejs.org/en/download/">NodeJS</a>.</p>
+<p>Version not below than v.6.12.1 is required.</p>
+<p>After NodeJS installation please check that everything is installed correctly (for example, PATH ), using command:</p>
+<pre><code><code class="source-code prettyprint">node --version</code>
+</code></pre><p>Stdout should be
+v6.12.1 (or higher).</p>
+<h3 id="install-all-node-packages">Install all node packages</h3><pre><code><code class="source-code prettyprint">npm install</code>
+</code></pre><p>After this command you will see <strong>node_modules</strong> folder</p>
+<h2 id="command-interface">Command interface</h2><h3 id="run-application-on-the-local-host">Run application on the local host</h3><pre><code><code class="source-code prettyprint">npm run start</code>
+</code></pre><p>After this command you can open Chrome browser and enter url <em>localhost:3000</em></p>
+<h3 id="check-project-source-syntax">Check project source syntax</h3><pre><code><code class="source-code prettyprint">npm run lint</code>
+</code></pre><p>You should see no warnings and no errors, if project</p>
+<h3 id="run-project-unit-tests">Run project unit-tests</h3><pre><code><code class="source-code prettyprint">npm run test</code>
+</code></pre><p>You should see no errors, if all tests are passed</p>
+<h3 id="build-project-doc">Build project doc</h3><pre><code><code class="source-code prettyprint">npm run doc</code>
+</code></pre><p>You can try index.html in &apos;esdoc&apos; folder</p>
+<h3 id="build-project-bundle-to-upload-app-on-server">Build project bundle to upload app on server</h3><pre><code><code class="source-code prettyprint">npm run build</code>
+</code></pre><p>You will see &apos;build&apos; folder and can try &apos;index.html&apos; to start live demo</p>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

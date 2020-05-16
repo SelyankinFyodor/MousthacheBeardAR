@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../../../">
+  <title data-ice="title">src/components/Content/WorkSpace/ResultCompose.js | test</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-App">App</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-resources">resources</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Common">Common</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Faces">Faces</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Icons">Icons</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Moustaches">Moustaches</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-content">components/Content</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Content">Content</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-content-carousel">components/Content/Carousel</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Carousel">Carousel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-useStyles">useStyles</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-content-workspace">components/Content/WorkSpace</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ResultArea">ResultArea</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ResultCompose">ResultCompose</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getFullFaceDescription">getFullFaceDescription</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadModels">loadModels</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-header">components/Header</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Header">Header</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Languages">Languages</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-useStyles">useStyles</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#tools">tools</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-LanguageSelector">LanguageSelector</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-useWidth">useWidth</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-useStyles">useStyles</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/components/Content/WorkSpace/ResultCompose.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import React, {useEffect, useState, useLayoutEffect} from &apos;react&apos;
+import {Image, Layer, Stage} from &apos;react-konva&apos;;
+import useImage from &apos;use-image&apos;;
+import PropTypes from &apos;prop-types&apos;;
+
+/**
+ * inserts facial hair onto the face using the provided coordinates of the nose and upper lip
+ *
+ * @param {Object} args - destructing object
+ * @param {string} args.ImageURl - path for Face preset image
+ * @param {string} args.mustacheUrl - path for Moustache image
+ * @param {Array&lt;number, number&gt;} args.nose - array of nose coordinates
+ * @param {Array&lt;number, number&gt;} args.lips - array of upper lip coordinates
+ * @returns {jsx}
+ * @constructor
+ */
+const ResultCompose = ({ImageURl, mustacheUrl, nose, lips})=&gt;{
+    const [image1]=useImage(ImageURl);
+    const [image2]=useImage(mustacheUrl);
+
+    //to adjust image size under stage
+    const [measure, setMeasure]=useState(1);
+
+    //for &apos;drag and drop&apos; and &apos;zoom&apos; features
+    const [scale, setScale]=useState(1);
+    const [stageX, setStageX]=useState(0);
+    const [stageY, setStageY]=useState(0);
+
+    //for mustache positioning
+    const [moustacheX, setMoustacheX]=useState(0);
+    const [moustacheY, setMoustacheY]=useState(0);
+    const [moustacheHeight, setMoustacheHeight]=useState(10);
+    const [moustacheWidth, setMoustacheWidth]=useState(10);
+    const [mAngle, setMAngle]=useState(0);
+
+    //to adapt to screen width
+    const [stageSize, setStageSize]=useState(600);
+
+    const handleWheel = e =&gt; {
+        e.evt.preventDefault();
+        const scaleBy = 0.99;
+        const stage = e.target.getStage();
+        const oldScale = stage.scaleX();
+        const mousePointTo = {
+            x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
+            y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale
+        };
+        const newScale = e.evt.deltaY &gt; 0 ? oldScale * scaleBy : oldScale / scaleBy;
+
+        stage.scale({ x: newScale, y: newScale });
+        setScale(newScale);
+        setStageX(-(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale);
+        setStageY(-(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale);
+    };
+
+    const dragStart = () =&gt; {};
+
+    const dragEnd = e =&gt; {
+        setStageX(e.target.x());
+        setStageY(e.target.y());
+    };
+
+    useEffect(()=&gt;{
+        const get_coefficient = (img) =&gt;{
+
+            if (!img) return 1;
+            return stageSize/(img.height &gt; img.width ? img.height : img.width);
+        };
+        setMeasure(get_coefficient(image1));
+    },[image1, stageSize]);
+
+    useEffect(()=&gt;{
+        if (!!lips &amp;&amp; !!nose) {
+            let angle = Math.atan(
+                ((lips[6].y - lips[0].y)/(lips[6].x - lips[0].x) + (nose[4].y - nose[0].y)/(nose[4].x - nose[0].x))/2);
+            let mWidth= measure * Math.sqrt(
+                (lips[6].x - lips[0].x)*(lips[6].x - lips[0].x)+(lips[6].y - lips[0].y)*(lips[6].y - lips[0].y)) * 1.5;
+            let mHeight = measure * Math.sqrt(
+                (lips[3].y - nose[2].y)*(lips[3].y - nose[2].y) + (lips[3].x - nose[2].x)*(lips[3].x - nose[2].x));
+
+            setMoustacheY(measure * ((nose.reduce((sum, cur)=&gt;{return sum + cur.y}, 0) +
+                lips.reduce((sum, cur)=&gt;{return sum + cur.y}, 0))/12) - mHeight/2 * Math.cos(angle) - mWidth/2 * Math.sin(angle));
+            setMoustacheX(measure * ((nose.reduce((sum, cur)=&gt;{return sum + cur.x}, 0) +
+                lips.reduce((sum, cur)=&gt;{return sum + cur.x}, 0))/12) - mWidth/2 * Math.cos(angle) + mHeight/2 * Math.sin(angle));
+            setMAngle((180/Math.PI)*angle);
+            setMoustacheHeight(mWidth);
+            setMoustacheWidth(mWidth);
+        }
+    },[lips, nose, measure]);
+
+    useLayoutEffect(()=&gt;{
+        const controlWidth = w =&gt;{if (w&lt;600){ setStageSize(w); }};
+        window.addEventListener(&apos;resize&apos;, () =&gt; controlWidth(window.innerWidth));
+        controlWidth(window.innerWidth);
+        return () =&gt; window.addEventListener(&apos;resize&apos;, () =&gt; controlWidth(window.innerWidth));
+    },[]);
+
+    return (
+        &lt;Stage
+            width={stageSize}
+            height={stageSize}
+            onWheel={handleWheel}
+            draggable
+            onDragStart={dragStart}
+            onDragEnd={dragEnd}
+            scaleX={scale}
+            scaleY={scale}
+            x={stageX}
+            y={stageY}
+        &gt;
+            {image1 ?
+                &lt;Layer&gt;
+                    &lt;Image
+                        image={image1}
+                        height={image1.height*measure}
+                        width={image1.width*measure}
+                    /&gt;
+                    {!!nose &amp;&amp; !!lips ?
+                        &lt;Image image={image2}
+                               height={moustacheHeight}
+                               width={moustacheWidth}
+                               y={moustacheY}
+                               x={moustacheX}
+                               rotation={mAngle}
+                        /&gt;
+                        : null
+                    }
+                &lt;/Layer&gt;
+                : null}
+        &lt;/Stage&gt;
+    );
+};
+
+ResultCompose.propTypes = {
+    ImageURl: PropTypes.string,
+    mustacheUrl: PropTypes.string,
+    nose: PropTypes.arrayOf(PropTypes.shape({
+        x: PropTypes.number,
+        y: PropTypes.number
+    })),
+    lips: PropTypes.array
+}
+
+export default ResultCompose;
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

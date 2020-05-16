@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../../../">
+  <title data-ice="title">src/components/Content/WorkSpace/ResultArea.js | test</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-App">App</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-resources">resources</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Common">Common</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Faces">Faces</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Icons">Icons</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Moustaches">Moustaches</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-content">components/Content</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Content">Content</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-content-carousel">components/Content/Carousel</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Carousel">Carousel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-useStyles">useStyles</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-content-workspace">components/Content/WorkSpace</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ResultArea">ResultArea</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ResultCompose">ResultCompose</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getFullFaceDescription">getFullFaceDescription</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-loadModels">loadModels</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#components-header">components/Header</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-Header">Header</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Languages">Languages</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-useStyles">useStyles</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#tools">tools</a><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-LanguageSelector">LanguageSelector</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-useWidth">useWidth</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-useStyles">useStyles</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/components/Content/WorkSpace/ResultArea.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import React, {useEffect} from &apos;react&apos;;
+import {getFullFaceDescription, loadModels} from &apos;./face-api-func&apos;;
+import ResultCompose from &quot;./ResultCompose&quot;;
+import {withNamespaces} from &quot;react-i18next&quot;;
+import withWidth from &apos;@material-ui/core/withWidth&apos;;
+import &apos;./ResultArea.css&apos;
+import Carousel from &apos;../Carousel/Carousel&apos;
+import {Faces, Moustaches} from &apos;../../../imports&apos;
+import Grid from &quot;@material-ui/core/Grid&quot;;
+import PropTypes from &apos;prop-types&apos;;
+
+/**
+ * @param {Object} args - destructing object
+ * @param {function} args.t - translation function provided by i18n
+ * @param args.width - width provider
+ * @returns {jsx}
+ */
+const ResultArea = ({t, width})=&gt;{
+    const [FaceImg, setFaceImg] = React.useState(Faces[0]);
+    const [MoustacheImg, setMoustacheImg] = React.useState(Moustaches[0]);
+    const [nose, setNose] = React.useState(null);
+    const [lips, setLips] = React.useState(null);
+    const [models, setModels] = React.useState(false);
+
+    useEffect(() =&gt; {
+        const handleImage = async (image = FaceImg) =&gt; {
+            await getFullFaceDescription(image, image.size).then(fDes =&gt; {
+                if (fDes) {
+                    getMustacheArea(fDes[0].landmarks.positions);
+                }
+            });
+        };
+
+        const loading = async ()=&gt; {
+            try {
+                console.log(&apos;load models&apos;);
+                await loadModels();
+                await handleImage(FaceImg);
+                setModels(true);
+                // eslint-disable-next-line no-empty
+            } catch (e) {}
+        };
+
+        const reload = async () =&gt;{
+            try {
+                console.log(&apos;new image&apos;);
+                await handleImage(FaceImg);
+                // eslint-disable-next-line no-empty
+            } catch (e) {}
+        };
+
+        if (!models){
+            loading().then();
+        }
+        else{
+            reload().then();
+        }
+    }, [FaceImg, models]);
+
+    const getMustacheArea = area =&gt; {
+        if (area){
+            const indicesNoseHor = [31, 32, 33, 34, 35];
+            const indicesLipsUpU = [48, 49, 50, 51, 52, 53, 54];
+            setNose(indicesNoseHor.map(el =&gt; area[el]));
+            setLips(indicesLipsUpU.map(el =&gt; area[el]));
+        }
+    };
+
+    const handleFileChange = async event =&gt; {
+        resetState();
+        await setFaceImg(URL.createObjectURL(event.target.files[0]));
+    };
+
+    const resetState = () =&gt; {
+        setNose(null);
+        setLips(null);
+    };
+
+    return (
+        &lt;div&gt;
+            &lt;Grid container direction={width === &apos;xs&apos; || width === &apos;sm&apos;? &apos;column&apos; : &apos;row&apos;}&gt;
+                &lt;Grid item container xs={12} sm={6} alignItems=&apos;center&apos; direction=&apos;column&apos;&gt;
+                    &lt;Grid item md&gt;
+                        &lt;ResultCompose mustacheUrl={MoustacheImg} ImageURl={FaceImg} nose={nose} lips={lips}/&gt;
+                    &lt;/Grid&gt;
+                    &lt;Grid item md&gt;
+                        &lt;div className=&quot;upload-btn-wrapper&quot;&gt;
+                            &lt;button className=&quot;btn&quot;&gt;{t(&apos;upload photo&apos;)}&lt;/button&gt;
+                            &lt;input type=&quot;file&quot; name=&quot;myfile&quot;
+                                   onChange={handleFileChange}
+                                   accept=&quot;.jpg, .jpeg, .png&quot;
+                            /&gt;
+                        &lt;/div&gt;
+                    &lt;/Grid&gt;
+                &lt;/Grid&gt;
+                &lt;Grid item container xs={12} sm={6} alignItems=&apos;center&apos; direction=&apos;column&apos; justify=&apos;space-between&apos;&gt;
+                    &lt;Grid item xs={6} sm={3}&gt;
+                        &lt;Carousel Images={Moustaches} setImage={setMoustacheImg}/&gt;
+                    &lt;/Grid&gt;
+                    &lt;Grid item xs={6} sm={3}&gt;
+                        &lt;Carousel Images={Faces} setImage={setFaceImg}/&gt;
+                    &lt;/Grid&gt;
+                &lt;/Grid&gt;
+            &lt;/Grid&gt;
+        &lt;/div&gt;
+    );
+};
+
+ResultArea.propTypes = {
+    t: PropTypes.func,
+    width: PropTypes.string
+}
+
+export default withNamespaces()(withWidth()(ResultArea));
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
