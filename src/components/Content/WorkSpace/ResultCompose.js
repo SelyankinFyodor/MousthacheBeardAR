@@ -2,21 +2,23 @@ import React, {useEffect, useState, useLayoutEffect} from 'react'
 import {Image, Layer, Stage} from 'react-konva';
 import useImage from 'use-image';
 import PropTypes from 'prop-types';
+import position from './positionСalculation'
 
 /**
- * inserts facial hair onto the face using the provided coordinates of the nose and upper lip
+ *
+ * * inserts facial hair onto the face using the provided coordinates of the nose and upper lip
  *
  * @param {Object} args - destructing object
  * @param {string} args.ImageURl - path for Face preset image
- * @param {string} args.mustacheUrl - path for Moustache image
- * @param {Array<number, number>} args.nose - array of nose coordinates
- * @param {Array<number, number>} args.lips - array of upper lip coordinates
+ * @param {string} args.MoustacheUrl - path for Moustache image
+ * @param {string} args.BeardsUrl - path for Beard image
  * @returns {jsx}
  * @constructor
  */
-const ResultCompose = ({ImageURl, mustacheUrl, nose, lips})=>{
-    const [image1]=useImage(ImageURl);
-    const [image2]=useImage(mustacheUrl);
+const ResultCompose = ({ImageURl, MoustacheUrl,BeardsUrl, coords})=>{
+    const [face]=useImage(ImageURl);
+    const [moustache]=useImage(MoustacheUrl);
+    const [beard]=useImage(BeardsUrl);
 
     //to adjust image size under stage
     const [measure, setMeasure]=useState(1);
@@ -66,27 +68,28 @@ const ResultCompose = ({ImageURl, mustacheUrl, nose, lips})=>{
             if (!img) return 1;
             return stageSize/(img.height > img.width ? img.height : img.width);
         };
-        setMeasure(get_coefficient(image1));
-    },[image1, stageSize]);
-
+        setMeasure(get_coefficient(face));
+    },[face, stageSize]);
+    const validateCoords = (coord)=>{
+        if (!!coord &&
+            !!coord.lipsUp && coord.lipsUp.length !== 0 &&
+            !!coord.lipsDown && coord.lipsDown.length !== 0 &&
+            !!coord.nose && coord.nose.length !== 0 &&
+            !!coord.oval && coord.oval.length !== 0)
+            return true
+    }
     useEffect(()=>{
-        if (!!lips && !!nose) {
-            let angle = Math.atan(
-                ((lips[6].y - lips[0].y)/(lips[6].x - lips[0].x) + (nose[4].y - nose[0].y)/(nose[4].x - nose[0].x))/2);
-            let mWidth= measure * Math.sqrt(
-                (lips[6].x - lips[0].x)*(lips[6].x - lips[0].x)+(lips[6].y - lips[0].y)*(lips[6].y - lips[0].y)) * 1.5;
-            let mHeight = measure * Math.sqrt(
-                (lips[3].y - nose[2].y)*(lips[3].y - nose[2].y) + (lips[3].x - nose[2].x)*(lips[3].x - nose[2].x));
-
-            setMoustacheY(measure * ((nose.reduce((sum, cur)=>{return sum + cur.y}, 0) +
-                lips.reduce((sum, cur)=>{return sum + cur.y}, 0))/12) - mHeight/2 * Math.cos(angle) - mWidth/2 * Math.sin(angle));
-            setMoustacheX(measure * ((nose.reduce((sum, cur)=>{return sum + cur.x}, 0) +
-                lips.reduce((sum, cur)=>{return sum + cur.x}, 0))/12) - mWidth/2 * Math.cos(angle) + mHeight/2 * Math.sin(angle));
-            setMAngle((180/Math.PI)*angle);
-            setMoustacheHeight(mWidth);
-            setMoustacheWidth(mWidth);
+        if (validateCoords(coords)) {
+            console.log(coords)
+            // const layout = position(measure, {nose:nose, lipsUp:lips})
+            const layout = position(measure, coords)
+            setMoustacheY(layout.moustache.y);
+            setMoustacheX(layout.moustache.x);
+            setMAngle((180/Math.PI)*layout.moustache.angle);
+            setMoustacheHeight(layout.moustache.height);
+            setMoustacheWidth(layout.moustache.width);
         }
-    },[lips, nose, measure]);
+    },[coords, measure]);
 
     useLayoutEffect(()=>{
         const controlWidth = w =>{if (w<600){ setStageSize(w); }};
@@ -108,15 +111,25 @@ const ResultCompose = ({ImageURl, mustacheUrl, nose, lips})=>{
             x={stageX}
             y={stageY}
         >
-            {image1 ?
+            {face ?
                 <Layer>
                     <Image
-                        image={image1}
-                        height={image1.height*measure}
-                        width={image1.width*measure}
+                        image={face}
+                        height={face.height*measure}
+                        width={face.width*measure}
                     />
-                    {!!nose && !!lips ?
-                        <Image image={image2}
+                    {validateCoords(coords) ?
+                        <Image image={moustache}
+                               height={moustacheHeight}
+                               width={moustacheWidth}
+                               y={moustacheY}
+                               x={moustacheX}
+                               rotation={mAngle}
+                        />
+                        : null
+                    }
+                    {validateCoords(coords) ?
+                        <Image image={beard}
                                height={moustacheHeight}
                                width={moustacheWidth}
                                y={moustacheY}
@@ -133,12 +146,13 @@ const ResultCompose = ({ImageURl, mustacheUrl, nose, lips})=>{
 
 ResultCompose.propTypes = {
     ImageURl: PropTypes.string,
-    mustacheUrl: PropTypes.string,
-    nose: PropTypes.arrayOf(PropTypes.shape({
-        x: PropTypes.number,
-        y: PropTypes.number
-    })),
-    lips: PropTypes.array
+    MoustacheUrl: PropTypes.string,
+    BeardsUrl: PropTypes.string,
+    coords: PropTypes.object
 }
-
+//
+// nose: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+//     oval: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+//     lipsDown: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+//     lipsUp: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 export default ResultCompose;
