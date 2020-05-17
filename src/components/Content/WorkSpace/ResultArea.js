@@ -5,7 +5,7 @@ import {withNamespaces} from "react-i18next";
 import withWidth from '@material-ui/core/withWidth';
 import './ResultArea.css'
 import Carousel from '../Carousel/Carousel'
-import {Faces, Moustaches} from '../../../imports'
+import {Faces, Moustaches, Beards} from '../../../imports'
 import Grid from "@material-ui/core/Grid";
 import PropTypes from 'prop-types';
 
@@ -18,8 +18,13 @@ import PropTypes from 'prop-types';
 const ResultArea = ({t, width})=>{
     const [FaceImg, setFaceImg] = React.useState(Faces[0]);
     const [MoustacheImg, setMoustacheImg] = React.useState(Moustaches[0]);
-    const [nose, setNose] = React.useState(null);
-    const [lips, setLips] = React.useState(null);
+    const [BeardsImg, setBeardsImg] = React.useState(Beards[0]);
+    const [coords, setCoords] = React.useState({
+        nose: [],
+        lipsUp: [],
+        lipsDown: [],
+        oval: []
+    })
     const [models, setModels] = React.useState(false);
 
     useEffect(() => {
@@ -59,21 +64,26 @@ const ResultArea = ({t, width})=>{
 
     const getMustacheArea = area => {
         if (area){
-            const indicesNoseHor = [31, 32, 33, 34, 35];
-            const indicesLipsUpU = [48, 49, 50, 51, 52, 53, 54];
-            setNose(indicesNoseHor.map(el => area[el]));
-            setLips(indicesLipsUpU.map(el => area[el]));
+            const range = (begin, end)=>{
+                return Array.from({length:end-begin+1},(v,k)=>k+begin)
+            }
+            setCoords({
+                nose: range(31,35).map(el => area[el]),
+                lipsUp: range(48,54).map(el => area[el]),
+                lipsDown: [48, 59, 58, 57, 56, 55, 54].map(el => area[el]),
+                oval: range(0,16).map(el => area[el])
+            })
         }
     };
 
     const handleFileChange = async event => {
-        resetState();
+        setCoords({
+            nose: [],
+            lipsUp: [],
+            lipsDown: [],
+            oval: []
+        })
         await setFaceImg(URL.createObjectURL(event.target.files[0]));
-    };
-
-    const resetState = () => {
-        setNose(null);
-        setLips(null);
     };
 
     return (
@@ -81,7 +91,11 @@ const ResultArea = ({t, width})=>{
             <Grid container direction={width === 'xs' || width === 'sm'? 'column' : 'row'}>
                 <Grid item container xs={12} sm={6} alignItems='center' direction='column'>
                     <Grid item md>
-                        <ResultCompose mustacheUrl={MoustacheImg} ImageURl={FaceImg} nose={nose} lips={lips}/>
+                        <ResultCompose
+                            MoustacheUrl={MoustacheImg}
+                            Url={BeardsImg}
+                            ImageURl={FaceImg}
+                            coords={coords}/>
                     </Grid>
                     <Grid item md>
                         <div className="upload-btn-wrapper">
@@ -99,6 +113,9 @@ const ResultArea = ({t, width})=>{
                     </Grid>
                     <Grid item xs={6} sm={3}>
                         <Carousel Images={Faces} setImage={setFaceImg}/>
+                    </Grid>
+                    <Grid item xs={6} sm={3}>
+                        <Carousel Images={Beards} setImage={setBeardsImg}/>
                     </Grid>
                 </Grid>
             </Grid>
