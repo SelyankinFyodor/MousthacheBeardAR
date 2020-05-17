@@ -1,4 +1,9 @@
 // ********************************************************
+// Import app logo
+// ********************************************************
+import logo from './static/images/moustahceTree.png';
+
+// ********************************************************
 // Imports of language icons
 // ********************************************************
 import rusFlagIcon from './static/images/icons/russia-flag.png';
@@ -25,9 +30,21 @@ import moustache005 from './static/images/moustaches/moustache005.png';
 import moustache006 from './static/images/moustaches/moustache006.png';
 
 // ********************************************************
-// Import app logo
+// Imports of beards with moustache images
 // ********************************************************
-import logo from './static/images/moustahceTree.png';
+import facehair001 from './static/images/scaled_face_hair/beard001.png';
+import facehair002 from './static/images/scaled_face_hair/beard002.png';
+import facehair003 from './static/images/scaled_face_hair/beard003.png';
+import facehair004 from './static/images/scaled_face_hair/beard004.png';
+import facehair005 from './static/images/scaled_face_hair/beard005.png';
+import facehair006 from './static/images/scaled_face_hair/beard006.png';
+
+// ********************************************************
+// Imports of beards without moustache images
+// ********************************************************
+import beard002 from './static/images/bears2/beard002.png';
+import beard004 from './static/images/bears2/beard004.png';
+import beard007 from './static/images/bears2/beard007.png';
 
 /**
  * dict of Icons and languages
@@ -55,14 +72,30 @@ export const Faces = [
  * array of moustaches png images
  * @type {[string]}
  */
-export const Moustaches =[
+export const Moustaches = [
   moustache001,
   moustache002,
   moustache003,
   moustache004,
   moustache005,
   moustache006,
+  // facehair001,
+  // facehair002,
+  // facehair003,
+  // facehair004,
+  // facehair005,
+  // facehair006,
 ];
+
+/**
+ *
+ * @type {[string]}
+ */
+export const Beards = [
+  beard002,
+  beard004,
+  beard007,
+]
 
 /**
  * logo of the app
