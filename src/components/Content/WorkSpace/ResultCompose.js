@@ -3,6 +3,7 @@ import {Image, Layer, Stage} from 'react-konva';
 import useImage from 'use-image';
 import PropTypes from 'prop-types';
 import position from './positionСalculation'
+import useWidth from "../../../tools/useWidth";
 
 /**
  *
@@ -19,9 +20,7 @@ const ResultCompose = ({ImageURl, MoustacheUrl,BeardsUrl, coords})=>{
     const [face]=useImage(ImageURl);
     const [moustache]=useImage(MoustacheUrl);
     const [beard]=useImage(BeardsUrl);
-
-    //to adjust image size under stage
-    const [measure, setMeasure]=useState(1);
+    const width=useWidth();
 
     //for 'drag and drop' and 'zoom' features
     const [scale, setScale]=useState(1);
@@ -35,8 +34,22 @@ const ResultCompose = ({ImageURl, MoustacheUrl,BeardsUrl, coords})=>{
     const [moustacheWidth, setMoustacheWidth]=useState(10);
     const [mAngle, setMAngle]=useState(0);
 
+    const calculateInitWidth = () => {
+        if (width.width < 1000) {
+            return width.width
+        }
+        else return 1000
+    }
+
     //to adapt to screen width
-    const [stageSize, setStageSize]=useState(600);
+    const [stageSize, setStageSize]=useState(calculateInitWidth());
+
+    const get_coefficient = (img) =>{
+        if (!img) return 1;
+        return stageSize/(img.height > img.width ? img.height : img.width);
+    };
+    //to adjust image size under stage
+    const [measure, setMeasure]=useState(get_coefficient(face));
 
     const handleWheel = e => {
         e.evt.preventDefault();
@@ -63,13 +76,22 @@ const ResultCompose = ({ImageURl, MoustacheUrl,BeardsUrl, coords})=>{
     };
 
     useEffect(()=>{
-        const get_coefficient = (img) =>{
-
-            if (!img) return 1;
-            return stageSize/(img.height > img.width ? img.height : img.width);
-        };
         setMeasure(get_coefficient(face));
     },[face, stageSize]);
+
+    useEffect(()=>{
+        if (800 > (width.width /2)){
+            console.log('gbplf')
+            console.log(width.width / 2)
+            setStageSize(width.width / 2)
+        }
+
+        else{
+            setStageSize(1000)
+        }
+    }, [width])
+
+
     const validateCoords = (coord)=>{
         if (!!coord &&
             !!coord.lipsUp && coord.lipsUp.length !== 0 &&
@@ -91,12 +113,12 @@ const ResultCompose = ({ImageURl, MoustacheUrl,BeardsUrl, coords})=>{
         }
     },[coords, measure]);
 
-    useLayoutEffect(()=>{
-        const controlWidth = w =>{if (w<600){ setStageSize(w); }};
-        window.addEventListener('resize', () => controlWidth(window.innerWidth));
-        controlWidth(window.innerWidth);
-        return () => window.addEventListener('resize', () => controlWidth(window.innerWidth));
-    },[]);
+    // useLayoutEffect(()=>{
+    //     const controlWidth = w =>{if (w<600){ setStageSize(w); }};
+    //     window.addEventListener('resize', () => controlWidth(window.innerWidth));
+    //     controlWidth(window.innerWidth);
+    //     return () => window.addEventListener('resize', () => controlWidth(window.innerWidth));
+    // },[]);
 
     return (
         <Stage
