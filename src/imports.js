@@ -30,21 +30,15 @@ import moustache005 from './static/images/moustaches/moustache005.png';
 import moustache006 from './static/images/moustaches/moustache006.png';
 
 // ********************************************************
-// Imports of beards with moustache images
-// ********************************************************
-import facehair001 from './static/images/scaled_face_hair/beard001.png';
-import facehair002 from './static/images/scaled_face_hair/beard002.png';
-import facehair003 from './static/images/scaled_face_hair/beard003.png';
-import facehair004 from './static/images/scaled_face_hair/beard004.png';
-import facehair005 from './static/images/scaled_face_hair/beard005.png';
-import facehair006 from './static/images/scaled_face_hair/beard006.png';
-
-// ********************************************************
 // Imports of beards without moustache images
 // ********************************************************
-import beard002 from './static/images/bears2/beard002.png';
-import beard004 from './static/images/bears2/beard004.png';
-import beard007 from './static/images/bears2/beard007.png';
+import beard001 from './static/images/beards/beard001.png';
+import beard002 from './static/images/beards/beard002.png';
+import beard003 from './static/images/beards/beard003.png';
+import beard004 from './static/images/beards/beard004.png';
+import beard005 from './static/images/beards/beard005.png';
+import beard006 from './static/images/beards/beard006.png';
+import beard007 from './static/images/beards/beard007.png';
 
 /**
  * dict of Icons and languages
@@ -79,12 +73,6 @@ export const Moustaches = [
   moustache004,
   moustache005,
   moustache006,
-  // facehair001,
-  // facehair002,
-  // facehair003,
-  // facehair004,
-  // facehair005,
-  // facehair006,
 ];
 
 /**
@@ -92,8 +80,12 @@ export const Moustaches = [
  * @type {[string]}
  */
 export const Beards = [
+  beard001,
   beard002,
+  beard003,
   beard004,
+  beard005,
+  beard006,
   beard007,
 ]
 

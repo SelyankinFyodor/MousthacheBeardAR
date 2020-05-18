@@ -4,9 +4,14 @@
   "english": "English",
   "eng": "English",
   "selected Language": "English",
-  "content": "Сontent",
+  "content": "Content",
   "footer": "Footer",
   "Next" : "Next",
   "Back" : "Back",
-  "upload photo": "upload photo"
+  "upload photo": "upload photo",
+  "Select Moustache": "Select Moustache",
+  "Select Beard": "Select Beard",
+  "St. Petersburg Polytechnic University of Peter the Great": "St. Petersburg Polytechnic University of Peter the Great",
+  "or select from the catalog": "or select from the catalog",
+  "Problems with face detection, select another photo": "Problems with face detection, select another photo"
 }
