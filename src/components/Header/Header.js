@@ -26,9 +26,8 @@ const theme = createMuiTheme({
  */
 const useStyles = makeStyles(() => ({
     header:{
-        border: 0,
-        borderRadius: 3,
-        boxShadow: '0 3px 5px 2px rgba(0, 0, 0, .3)',
+        lineHeightStep: "32px",
+        border: "1px solid #000"
     }
 }));
 /**

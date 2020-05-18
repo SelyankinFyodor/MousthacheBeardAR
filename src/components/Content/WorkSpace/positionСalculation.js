@@ -1,14 +1,15 @@
 /**
- *
- * @param measure
- * @param nose
- * @param lipsUp
- * @param lipsDown
- * @param oval
+ * calculating position of beard and moustache
+ * @param args
+ * @param {object} measure - coef
+ * @param {Array<{x:number, y:number}>} args.nose - nose coordinates
+ * @param {Array<{x:number, y:number}>} args.lipsUp - up lips coordinates
+ * @param {Array<{x:number, y:number}>} args.lipsDown - down lips coordinates
+ * @param {Array<{x:number, y:number}>} args.oval - face border
  * @returns {{beard: *,
  * moustache: {width: number, x: number, angle: number, y: number, height: number}}}
  */
-export default (measure ,{nose, lipsUp, lipsDown, oval})=>{
+const position = (measure ,{nose, lipsUp, lipsDown, oval})=>{
     /**
      * moustache position calculating
      * @returns {{width: number, x: number, angle: number, y: number, height: number}}
@@ -38,9 +39,13 @@ export default (measure ,{nose, lipsUp, lipsDown, oval})=>{
     }
 
     // beard position calculating
+    /**
+     * beard position calculating
+     * @returns {{width: number, x: number, angle: number, y: number, height: number}}
+     */
     const getBeardPos = ()=>{
         let height_mul_coefficient = 8
-        let width_mul_coefficient = 1.35
+        let width_mul_coefficient = 1.33
         let y_height_add_coefficient = 0.63
         let y_width_add_coefficient = 1.2
         let x_height_add_coefficient = 0.8
@@ -60,11 +65,6 @@ export default (measure ,{nose, lipsUp, lipsDown, oval})=>{
         let x = measure*oval[8].x
             - width/2 * Math.cos(angle) * x_width_add_coefficient
             + height/2 * Math.sin(angle) * x_height_add_coefficient
-        console.log("width: " + width)
-        console.log("height: " + height)
-        console.log("y: " + y)
-        console.log("x: " + x)
-        console.log("angle: " + angle)
         return {
             angle: angle*(180/Math.PI),
             width: width,
@@ -72,13 +72,6 @@ export default (measure ,{nose, lipsUp, lipsDown, oval})=>{
             y: y,
             x: x
         }
-        // return {
-        //     angle: 0*(180/Math.PI)+3,
-        //     width: 240,
-        //     height: 300,
-        //     y: 360,
-        //     x: 95
-        // }
     }
 
     return ({
@@ -88,3 +81,4 @@ export default (measure ,{nose, lipsUp, lipsDown, oval})=>{
 }
 
 
+export default position

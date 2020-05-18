@@ -12,17 +12,10 @@ import PropTypes from 'prop-types';
  * styles for carousel
  * @type {function(props?: any): Object}
  */
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
     root: {
         maxWidth: 400,
         flexGrow: 1,
-    },
-    header: {
-        display: 'flex',
-        alignItems: 'center',
-        height: 50,
-        paddingLeft: theme.spacing(4),
-        backgroundColor: theme.palette.background.default,
     },
     img: {
         overflow: 'hidden',
@@ -53,7 +46,6 @@ const Carousel= ({Images, setImage, t, width})=> {
         setActiveStep(prevActiveStep => prevActiveStep - 1);
     };
     useEffect(()=>{
-        console.log(typeof setImage)
         setImage(Images[activeStep])
     },[activeStep, Images , setImage]);
 

@@ -7,21 +7,40 @@ import './ResultArea.css'
 import Carousel from '../Carousel/Carousel'
 import {Faces, Moustaches, Beards} from '../../../imports'
 import Grid from "@material-ui/core/Grid";
-import Box from '@material-ui/core/Box';
 import PropTypes from 'prop-types';
+import {makeStyles} from "@material-ui/core/styles";
 
+const useStyles = makeStyles(() => ({
+    grid: {
+        lineHeightStep: "32px",
+        border: "1px solid #000",
+    },
+    text: {
+        fontFamily: 'Tangerine'
+    },
+    error: {
+        backgroundColor:'#FF4500'
+    }
+}));
 /**
  * @param {Object} args - destructing object
  * @param {function} args.t - translation function provided by i18n
- * @param args.width - width provider
  * @returns {jsx}
  */
 const ResultArea = ({t}) => {
     const [FaceImg, setFaceImg] = React.useState(Faces[0]);
     const [MoustacheImg, setMoustacheImg] = React.useState(Moustaches[0]);
-  
+
     const [BeardsImg, setBeardsImg] = React.useState(Beards[0]);
-    const width = useWidth()
+    const [errorLoad, setError] = React.useState(false);
+    const width = useWidth();
+    const [layout, setLayout]=React.useState([6,3])
+    const getDir = ()=>{
+        return width.width <= 600 ? 'column' : 'row'
+    }
+
+    const [dir, setdir]=React.useState(getDir())
+    const classes = useStyles();
 
     const [coords, setCoords] = React.useState({
         nose: [],
@@ -34,8 +53,13 @@ const ResultArea = ({t}) => {
     useEffect(() => {
         const handleImage = async (image = FaceImg) => {
             await getFullFaceDescription(image, image.size).then(fDes => {
-                if (fDes) {
+                if (fDes.length === '0') {
+                    setError(true)
+                }
+
+                if (fDes && fDes.lenght !== 0) {
                     getMustacheArea(fDes[0].landmarks.positions);
+                    setError(false)
                 }
             });
         };
@@ -66,6 +90,7 @@ const ResultArea = ({t}) => {
         }
     }, [FaceImg, models]);
 
+
     const getMustacheArea = area => {
         if (area){
             const range = (begin, end)=>{
@@ -90,18 +115,40 @@ const ResultArea = ({t}) => {
         await setFaceImg(URL.createObjectURL(event.target.files[0]));
     };
 
-    return (
-        <div>
-            <Grid container direction={width.width <= 600 ? 'column' : 'row'} alignItems='center'>
+    useEffect(()=>{
+        if (width.width <= 600){
+            console.log(width.width)
+            setLayout([12,12])
+            setdir('column')
+        }
+        else{
+            setLayout([6,3])
+            setdir('row')
+        }
+    }, [width])
 
-                <Grid item xs={6} container alignItems='center' direction='column'>
-                    <ResultCompose
-                        MoustacheUrl={MoustacheImg}
-                        Url={BeardsImg}
-                        ImageURl={FaceImg}
-                        coords={coords}/>
-                </Grid >
-                <Grid item xs={3} container alignItems='center' direction='column'>
+    return (
+        <Grid container direction={dir} className={classes.grid}>
+            <Grid item
+                  className={classes.grid}
+                  xs={layout[0]}
+            >
+                <ResultCompose
+                    MoustacheUrl={MoustacheImg}
+                    BeardsUrl={BeardsImg}
+                    ImageURl={FaceImg}
+                    coords={coords}
+                    className={classes.grid}
+                />
+            </Grid >
+            <Grid item container
+                  direction={'column'}
+                  alignItems={'center'}
+                  className={classes.grid}
+                  xs={layout[1]}
+            >
+                <Grid item
+                >
                     <div className="upload-btn-wrapper">
                         <button className="btn">{t('upload photo')}</button>
                         <input type="file" name="myfile"
@@ -109,18 +156,48 @@ const ResultArea = ({t}) => {
                                accept=".jpg, .jpeg, .png"
                         />
                     </div>
-                    <Carousel Images={Faces} setImage={setFaceImg}/>
                 </Grid>
-                <Grid item xs={3} container alignItems='center' direction='column' justify='space-around'>
-                    <Grid item>
-                        <Carousel Images={Moustaches} setImage={setMoustacheImg}/>
-                    </Grid>
-                    <Grid item >
-                        <Carousel Images={Beards} setImage={setBeardsImg}/>
-                    </Grid>
+                <Grid item
+                      className={[classes.text, classes.error]}
+                >
+                    {errorLoad ? t('Problems with face detection, select another photo') : <br/>}
+                </Grid>
+                <Grid item
+                      className={classes.text}
+                >
+                    {t('or select from the catalog')}
+                </Grid>
+                <Grid item
+                >
+                    <Carousel Images={Faces} setImage={setFaceImg}/>
+                </Grid >
+            </Grid>
+            <Grid item container
+                  direction={'column'}
+                  alignItems={'center'}
+                  className={classes.grid}
+                  xs={layout[1]}
+            >
+                <Grid
+                    className={classes.text}
+                >
+                    {t('Select Moustache')}
+                </Grid >
+                <Grid item xs
+                >
+                    <Carousel Images={Moustaches} setImage={setMoustacheImg}/>
+                </Grid>
+                <Grid
+                    className={classes.text}
+                >
+                    {t('Select Beard')}
+                </Grid >
+                <Grid item
+                >
+                    <Carousel Images={Beards} setImage={setBeardsImg}/>
                 </Grid>
             </Grid>
-        </div>
+        </Grid>
     );
 };
 
