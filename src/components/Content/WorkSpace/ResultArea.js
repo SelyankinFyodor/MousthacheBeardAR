@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 const ResultArea = ({t, width})=>{
     const [FaceImg, setFaceImg] = React.useState(Faces[0]);
     const [MoustacheImg, setMoustacheImg] = React.useState(Moustaches[0]);
-    const [BeardsImg, setBeardsImg] = React.useState(Beards[0]);
+    const [BeardImg, setBeardImg] = React.useState(Beards[0]);
     const [coords, setCoords] = React.useState({
         nose: [],
         lipsUp: [],
@@ -93,8 +93,9 @@ const ResultArea = ({t, width})=>{
                     <Grid item md>
                         <ResultCompose
                             MoustacheUrl={MoustacheImg}
-                            Url={BeardsImg}
+                            Url={BeardImg}
                             ImageURl={FaceImg}
+                            BeardsUrl={BeardImg}
                             coords={coords}/>
                     </Grid>
                     <Grid item md>
@@ -115,7 +116,7 @@ const ResultArea = ({t, width})=>{
                         <Carousel Images={Faces} setImage={setFaceImg}/>
                     </Grid>
                     <Grid item xs={6} sm={3}>
-                        <Carousel Images={Beards} setImage={setBeardsImg}/>
+                        <Carousel Images={Beards} setImage={setBeardImg}/>
                     </Grid>
                 </Grid>
             </Grid>
