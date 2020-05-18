@@ -29,7 +29,7 @@ export default (measure ,{nose, lipsUp, lipsDown, oval})=>{
             - width/2 * Math.cos(angle)
             + height/2 * Math.sin(angle)
         return {
-            angle: angle,
+            angle: angle*(180/Math.PI),
             width: width,
             height: height,
             y: y,
@@ -38,7 +38,48 @@ export default (measure ,{nose, lipsUp, lipsDown, oval})=>{
     }
 
     // beard position calculating
-    const getBeardPos = ()=>{}
+    const getBeardPos = ()=>{
+        let height_mul_coefficient = 8
+        let width_mul_coefficient = 1.35
+        let y_height_add_coefficient = 0.63
+        let y_width_add_coefficient = 1.2
+        let x_height_add_coefficient = 0.8
+        let x_width_add_coefficient = 1.02
+        let angle = Math.atan((
+            (lipsDown[0].y - lipsDown[6].y)/(lipsDown[0].x - lipsDown[6].x)
+            + (oval[7].y - oval[9].y)/(oval[7].x - oval[9].x)
+            + (oval[15].y - oval[1].y)/(oval[15].x - oval[1].x)
+            + (oval[14].y - oval[2].y)/(oval[14].x - oval[2].x)
+            + (oval[13].y - oval[3].y)/(oval[13].x - oval[3].x)
+        )/5)
+        let width = width_mul_coefficient * measure*(oval[15].x - oval[1].x)
+        let height = height_mul_coefficient * measure*(oval[8].y- lipsDown[4].y)
+        let y = measure*(oval[7].y + oval[8].y + oval[9].y + lipsDown[3].y + lipsDown[4].y + lipsDown[5].y)/6
+            - height/2 * Math.cos(angle) * y_height_add_coefficient
+            - width/2 * Math.sin(angle) * y_width_add_coefficient
+        let x = measure*oval[8].x
+            - width/2 * Math.cos(angle) * x_width_add_coefficient
+            + height/2 * Math.sin(angle) * x_height_add_coefficient
+        console.log("width: " + width)
+        console.log("height: " + height)
+        console.log("y: " + y)
+        console.log("x: " + x)
+        console.log("angle: " + angle)
+        return {
+            angle: angle*(180/Math.PI),
+            width: width,
+            height: height,
+            y: y,
+            x: x
+        }
+        // return {
+        //     angle: 0*(180/Math.PI)+3,
+        //     width: 240,
+        //     height: 300,
+        //     y: 360,
+        //     x: 95
+        // }
+    }
 
     return ({
         moustache:getMoustachePos(),

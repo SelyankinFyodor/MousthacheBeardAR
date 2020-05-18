@@ -19,8 +19,10 @@ import PropTypes from 'prop-types';
 const ResultArea = ({t}) => {
     const [FaceImg, setFaceImg] = React.useState(Faces[0]);
     const [MoustacheImg, setMoustacheImg] = React.useState(Moustaches[0]);
+  
     const [BeardsImg, setBeardsImg] = React.useState(Beards[0]);
     const width = useWidth()
+
     const [coords, setCoords] = React.useState({
         nose: [],
         lipsUp: [],
