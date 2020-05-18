@@ -59,15 +59,10 @@ const Carousel= ({Images, setImage, t, width})=> {
 
     return (
         <div className={classes.root}>
-                <img
-                    className={classes.img}
-                    src={Images[activeStep]}
-                    alt={':('}
-                />
             <MobileStepper
                 steps={maxSteps}
                 position="static"
-                variant={width === 'xs' || width === 'sm'? 'none' : 'dots'}
+                variant={'text'}
                 activeStep={activeStep}
                 nextButton={
                     <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
@@ -81,6 +76,11 @@ const Carousel= ({Images, setImage, t, width})=> {
                         {width === 'xs' || width === 'sm'? '' : t('Back')}
                     </Button>
                 }
+            />
+            <img
+                className={classes.img}
+                src={Images[activeStep]}
+                alt={':('}
             />
         </div>
     );

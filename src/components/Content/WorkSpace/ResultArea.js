@@ -2,11 +2,12 @@ import React, {useEffect} from 'react';
 import {getFullFaceDescription, loadModels} from './face-api-func';
 import ResultCompose from "./ResultCompose";
 import {withNamespaces} from "react-i18next";
-import withWidth from '@material-ui/core/withWidth';
+import useWidth from "../../../tools/useWidth";
 import './ResultArea.css'
 import Carousel from '../Carousel/Carousel'
 import {Faces, Moustaches, Beards} from '../../../imports'
 import Grid from "@material-ui/core/Grid";
+import Box from '@material-ui/core/Box';
 import PropTypes from 'prop-types';
 
 /**
@@ -15,10 +16,13 @@ import PropTypes from 'prop-types';
  * @param args.width - width provider
  * @returns {jsx}
  */
-const ResultArea = ({t, width})=>{
+const ResultArea = ({t}) => {
     const [FaceImg, setFaceImg] = React.useState(Faces[0]);
     const [MoustacheImg, setMoustacheImg] = React.useState(Moustaches[0]);
-    const [BeardImg, setBeardImg] = React.useState(Beards[0]);
+  
+    const [BeardsImg, setBeardsImg] = React.useState(Beards[0]);
+    const width = useWidth()
+
     const [coords, setCoords] = React.useState({
         nose: [],
         lipsUp: [],
@@ -88,35 +92,31 @@ const ResultArea = ({t, width})=>{
 
     return (
         <div>
-            <Grid container direction={width === 'xs' || width === 'sm'? 'column' : 'row'}>
-                <Grid item container xs={12} sm={6} alignItems='center' direction='column'>
-                    <Grid item md>
-                        <ResultCompose
-                            MoustacheUrl={MoustacheImg}
-                            Url={BeardImg}
-                            ImageURl={FaceImg}
-                            BeardsUrl={BeardImg}
-                            coords={coords}/>
-                    </Grid>
-                    <Grid item md>
-                        <div className="upload-btn-wrapper">
-                            <button className="btn">{t('upload photo')}</button>
-                            <input type="file" name="myfile"
-                                   onChange={handleFileChange}
-                                   accept=".jpg, .jpeg, .png"
-                            />
-                        </div>
-                    </Grid>
+            <Grid container direction={width.width <= 600 ? 'column' : 'row'} alignItems='center'>
+
+                <Grid item xs={6} container alignItems='center' direction='column'>
+                    <ResultCompose
+                        MoustacheUrl={MoustacheImg}
+                        Url={BeardsImg}
+                        ImageURl={FaceImg}
+                        coords={coords}/>
+                </Grid >
+                <Grid item xs={3} container alignItems='center' direction='column'>
+                    <div className="upload-btn-wrapper">
+                        <button className="btn">{t('upload photo')}</button>
+                        <input type="file" name="myfile"
+                               onChange={handleFileChange}
+                               accept=".jpg, .jpeg, .png"
+                        />
+                    </div>
+                    <Carousel Images={Faces} setImage={setFaceImg}/>
                 </Grid>
-                <Grid item container xs={12} sm={6} alignItems='center' direction='column' justify='space-between'>
-                    <Grid item xs={6} sm={3}>
+                <Grid item xs={3} container alignItems='center' direction='column' justify='space-around'>
+                    <Grid item>
                         <Carousel Images={Moustaches} setImage={setMoustacheImg}/>
                     </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <Carousel Images={Faces} setImage={setFaceImg}/>
-                    </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <Carousel Images={Beards} setImage={setBeardImg}/>
+                    <Grid item >
+                        <Carousel Images={Beards} setImage={setBeardsImg}/>
                     </Grid>
                 </Grid>
             </Grid>
@@ -129,4 +129,4 @@ ResultArea.propTypes = {
     width: PropTypes.string
 }
 
-export default withNamespaces()(withWidth()(ResultArea));
+export default withNamespaces()(ResultArea);
