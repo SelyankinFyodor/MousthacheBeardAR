@@ -1,9 +1,10 @@
 const fetch = require('node-fetch');
 const faceApi = require("face-api.js");
-
 const fs = require('fs');
+
 const canvas = require("canvas")
 const {Canvas, Image, ImageData} = canvas;
+
 import position from '../src/components/Content/WorkSpace/positionСalculation'
 
 faceApi.env.monkeyPatch({fetch, Canvas, Image, ImageData});
@@ -11,14 +12,16 @@ faceApi.env.monkeyPatch({fetch, Canvas, Image, ImageData});
 describe('should get correct coordinates for photos', ()=>{
   const MODEL_URL = __dirname + '/models'
 
-  const range = (begin, end) => Array.from({length:end-begin+1},(v,k)=>k+begin)
+  const range = (begin, end) => Array.from({length:end-begin+1},(v,k)=>k+begin);
+
+  const testSet = JSON.parse(fs.readFileSync(__dirname + '/testSet.json', 'utf8'));
 
   const coords_indexes = {
     nose: range(31,35),
     lipsUp: range(48,54),
     lipsDown: [48, 59, 58, 57, 56, 55, 54],
     oval: range(0,16)
-  }
+  };
 
   const fetch_landmarks = (landmarks) => {
     const positions = landmarks[0].landmarks.positions
@@ -28,23 +31,16 @@ describe('should get correct coordinates for photos', ()=>{
       lipsDown:coords_indexes.lipsDown.map(el => positions[el]),
       oval:coords_indexes.oval.map(el => positions[el])
     }
-  }
+  };
+
+  beforeAll(async () => {
+    await faceApi.nets.ssdMobilenetv1.loadFromDisk(MODEL_URL)
+    await faceApi.nets.faceLandmark68Net.loadFromDisk(MODEL_URL)
+  });
 
   const delta = {
-    moustache: {
-      x: 10,
-      y: 10,
-      width: 20,
-      height: 10,
-      angle: 2
-    },
-    beard: {
-      x: 10,
-      y: 50,
-      width: 20,
-      height: 100,
-      angle: 4
-    }
+    moustache: { x: 10, y: 10, width: 30, height: 20, angle: 2},
+    beard: {x: 10, y: 50, width: 20, height: 50, angle: 4}
   }
 
   const checkDistance = (standard, model)=>{
@@ -52,7 +48,7 @@ describe('should get correct coordinates for photos', ()=>{
     const parentCheck = (parentKey)=>{
       for (let key in standard[parentKey]){
         if (Math.abs(standard[parentKey][key] - model[parentKey][key]) > delta[parentKey][key]){
-          console.log(model[parentKey][key])
+          console.log(key+": " + standard[parentKey][key] + " vs " + model[parentKey][key])
           return false
         }
       }
@@ -60,16 +56,11 @@ describe('should get correct coordinates for photos', ()=>{
     }
 
     return parentCheck('beard') && parentCheck('moustache')
+  };
 
-  }
-
-  beforeAll(async () => {
-    await faceApi.nets.ssdMobilenetv1.loadFromDisk(MODEL_URL)
-    await faceApi.nets.faceLandmark68Net.loadFromDisk(MODEL_URL)
-  });
 
   const doTest = (correct_set, photo) => {
-    return it(photo, async ()=>{
+    return test(photo, async ()=>{
       const img = await canvas.loadImage(__dirname +'/photos/' + photo + '.jpg')
       const landmarks = await faceApi.detectAllFaces(img).withFaceLandmarks();
 
@@ -85,30 +76,9 @@ describe('should get correct coordinates for photos', ()=>{
       expect(checkDistance(correct_set,exp_set)).toBe(true);
 
     }, 30000)
-  }
+  };
 
-  const testSet = [
-    {
-      photo: 'face007',
-      set: {
-        measure: 1.4633928571428572,
-        beard: {
-          angle: -0.8068599068466394,
-          width: 307.2456466510446,
-          height: 509.70221340656246,
-          y: 195.37708725783628,
-          x: 325.34095172117725,
-        },
-        moustache: {
-          angle: -0.413135957470869,
-          width: 119.96450821138012,
-          height: 98.9791154879702,
-          y: 281.19792827216367,
-          x: 423.50521036768373,
-        }
-      }
-    }
-  ]
-
-  testSet.forEach(el => doTest(el.set, el.photo))
+  describe('doTests', ()=>{
+    testSet.forEach(el => doTest(el.set, el.photo))
+  });
 })
