@@ -12,17 +12,10 @@ import PropTypes from 'prop-types';
  * styles for carousel
  * @type {function(props?: any): Object}
  */
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
     root: {
         maxWidth: 400,
         flexGrow: 1,
-    },
-    header: {
-        display: 'flex',
-        alignItems: 'center',
-        height: 50,
-        paddingLeft: theme.spacing(4),
-        backgroundColor: theme.palette.background.default,
     },
     img: {
         overflow: 'hidden',
@@ -53,21 +46,15 @@ const Carousel= ({Images, setImage, t, width})=> {
         setActiveStep(prevActiveStep => prevActiveStep - 1);
     };
     useEffect(()=>{
-        console.log(typeof setImage)
         setImage(Images[activeStep])
     },[activeStep, Images , setImage]);
 
     return (
         <div className={classes.root}>
-                <img
-                    className={classes.img}
-                    src={Images[activeStep]}
-                    alt={':('}
-                />
             <MobileStepper
                 steps={maxSteps}
                 position="static"
-                variant={width === 'xs' || width === 'sm'? 'none' : 'dots'}
+                variant={'text'}
                 activeStep={activeStep}
                 nextButton={
                     <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
@@ -81,6 +68,11 @@ const Carousel= ({Images, setImage, t, width})=> {
                         {width === 'xs' || width === 'sm'? '' : t('Back')}
                     </Button>
                 }
+            />
+            <img
+                className={classes.img}
+                src={Images[activeStep]}
+                alt={':('}
             />
         </div>
     );

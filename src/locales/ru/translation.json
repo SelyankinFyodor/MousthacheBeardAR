@@ -8,5 +8,10 @@
   "footer": "Подвал",
   "Next" : "Вперед",
   "Back" : "Назад",
-  "upload photo": "загрузить фото"
+  "upload photo": "загрузить фото",
+  "Select Moustache": "Выберите усы",
+  "Select Beard": "Выберите бороду",
+  "St. Petersburg Polytechnic University of Peter the Great": "Санкт-Петербургский Политехнический Университет Петра Великого",
+  "or select from the catalog": "или выберите из каталога",
+  "Problems with face detection, select another photo": "Проблемы с определением лиц, выберите другое фото"
 }

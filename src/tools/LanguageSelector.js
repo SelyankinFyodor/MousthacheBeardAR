@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
         minWidth: 120,
     },
     text:{
-        fontFamily: 'Lobster'
+        fontFamily: 'Tangerine'
     },
 }));
 

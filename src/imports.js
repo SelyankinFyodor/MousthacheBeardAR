@@ -1,4 +1,9 @@
 // ********************************************************
+// Import app logo
+// ********************************************************
+import logo from './static/images/moustahceTree.png';
+
+// ********************************************************
 // Imports of language icons
 // ********************************************************
 import rusFlagIcon from './static/images/icons/russia-flag.png';
@@ -25,9 +30,15 @@ import moustache005 from './static/images/moustaches/moustache005.png';
 import moustache006 from './static/images/moustaches/moustache006.png';
 
 // ********************************************************
-// Import app logo
+// Imports of beards without moustache images
 // ********************************************************
-import logo from './static/images/moustahceTree.png';
+import beard001 from './static/images/beards/beard001.png';
+import beard002 from './static/images/beards/beard002.png';
+import beard003 from './static/images/beards/beard003.png';
+import beard004 from './static/images/beards/beard004.png';
+import beard005 from './static/images/beards/beard005.png';
+import beard006 from './static/images/beards/beard006.png';
+import beard007 from './static/images/beards/beard007.png';
 
 /**
  * dict of Icons and languages
@@ -55,7 +66,7 @@ export const Faces = [
  * array of moustaches png images
  * @type {[string]}
  */
-export const Moustaches =[
+export const Moustaches = [
   moustache001,
   moustache002,
   moustache003,
@@ -63,6 +74,20 @@ export const Moustaches =[
   moustache005,
   moustache006,
 ];
+
+/**
+ *
+ * @type {[string]}
+ */
+export const Beards = [
+  beard001,
+  beard002,
+  beard003,
+  beard004,
+  beard005,
+  beard006,
+  beard007,
+]
 
 /**
  * logo of the app
