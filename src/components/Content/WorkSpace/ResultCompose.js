@@ -93,6 +93,7 @@ const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords})=>{
         if (validateCoords(coords)) {
             // const layout = position(measure, {nose:nose, lipsUp:lips})
             const layout = position(measure, coords)
+
             console.log("newMeasure: " + measure)
             console.log("layout.beard")
             console.log(layout.beard)
