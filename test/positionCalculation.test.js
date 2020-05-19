@@ -34,16 +34,16 @@ describe('should get correct coordinates for photos', ()=>{
     moustache: {
       x: 10,
       y: 10,
-      width: 10,
-      height: 20,
+      width: 20,
+      height: 10,
       angle: 2
     },
     beard: {
       x: 10,
-      y: 10,
-      width: 10,
-      height: 20,
-      angle: 2
+      y: 50,
+      width: 20,
+      height: 100,
+      angle: 4
     }
   }
 
@@ -52,6 +52,7 @@ describe('should get correct coordinates for photos', ()=>{
     const parentCheck = (parentKey)=>{
       for (let key in standard[parentKey]){
         if (Math.abs(standard[parentKey][key] - model[parentKey][key]) > delta[parentKey][key]){
+          console.log(model[parentKey][key])
           return false
         }
       }
