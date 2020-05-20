@@ -1,6 +1,9 @@
 import * as faceapi from 'face-api.js';
 
-// Load models and weights
+/**
+ * Load models and weights
+ * @returns {Promise<void>}
+ */
 export async function loadModels() {
     const MODEL_URL = process.env.PUBLIC_URL + '/models';
     await faceapi.loadTinyFaceDetectorModel(MODEL_URL);
@@ -9,6 +12,12 @@ export async function loadModels() {
     console.log('models loaded')
 }
 
+/**
+ *
+ * @param blob
+ * @param inputSize
+ * @returns {Promise<ComputeAllFaceDescriptorsTask<WithFaceLandmarks<{detection: FaceDetection}, FaceLandmarks68>>>}
+ */
 export async function getFullFaceDescription(blob, inputSize = 512) {
     // tiny_face_detector options
     let scoreThreshold = 0.5;

@@ -1,9 +1,11 @@
 import React from 'react'
-import {withNamespaces} from "react-i18next";
 import ResultArea from "./WorkSpace/ResultArea";
-// import MainContainer from "./Carusel/Container";
 
-const Content = ({t})=> (<div>
+/**
+ * main path of th app
+ * @returns {jsx}
+ */
+const Content = ()=> (<div>
     <ResultArea/>
 </div>);
-export default withNamespaces()(Content);
+export default Content;

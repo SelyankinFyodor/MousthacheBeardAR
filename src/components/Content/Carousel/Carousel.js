@@ -6,18 +6,16 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import {withNamespaces} from "react-i18next";
 import withWidth from '@material-ui/core/withWidth';
+import PropTypes from 'prop-types';
 
-const useStyles = makeStyles(theme => ({
+/**
+ * styles for carousel
+ * @type {function(props?: any): Object}
+ */
+const useStyles = makeStyles(() => ({
     root: {
         maxWidth: 400,
         flexGrow: 1,
-    },
-    header: {
-        display: 'flex',
-        alignItems: 'center',
-        height: 50,
-        paddingLeft: theme.spacing(4),
-        backgroundColor: theme.palette.background.default,
     },
     img: {
         overflow: 'hidden',
@@ -26,6 +24,14 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+/**
+ * @param args -destructing object
+ * @param {<string>[]>} args.Images - set of pictures for the carousel
+ * @param {function} args.setImage - hook function from the parent component that sets the picture to its state
+ * @param {function} args.t - translation function provided by i18n
+ * @param {function} args.width - width provider
+ * @returns {jsx}
+ */
 const Carousel= ({Images, setImage, t, width})=> {
     const classes = useStyles();
     const theme = useTheme();
@@ -39,19 +45,16 @@ const Carousel= ({Images, setImage, t, width})=> {
     const handleBack = () => {
         setActiveStep(prevActiveStep => prevActiveStep - 1);
     };
-    useEffect(()=>{setImage(Images[activeStep])},[activeStep, Images , setImage]);
+    useEffect(()=>{
+        setImage(Images[activeStep])
+    },[activeStep, Images , setImage]);
 
     return (
         <div className={classes.root}>
-                <img
-                    className={classes.img}
-                    src={Images[activeStep]}
-                    alt={':('}
-                />
             <MobileStepper
                 steps={maxSteps}
                 position="static"
-                variant={width === 'xs' || width === 'sm'? 'none' : 'dots'}
+                variant={'text'}
                 activeStep={activeStep}
                 nextButton={
                     <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
@@ -66,7 +69,20 @@ const Carousel= ({Images, setImage, t, width})=> {
                     </Button>
                 }
             />
+            <img
+                className={classes.img}
+                src={Images[activeStep]}
+                alt={':('}
+            />
         </div>
     );
 };
+
+Carousel.propTypes = {
+    Images: PropTypes.arrayOf(PropTypes.string),
+    setImage: PropTypes.func,
+    t: PropTypes.func,
+    width: PropTypes.string
+}
+
 export default withNamespaces()(withWidth()(Carousel));
