@@ -5,10 +5,16 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import {createMuiTheme, makeStyles, ThemeProvider} from '@material-ui/core/styles';
 import Box from "@material-ui/core/Box";
-import {withWidth} from "@material-ui/core";
 import Hidden from "@material-ui/core/Hidden";
 
 import {Common, Icons} from '../../imports'
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+
+import {withNamespaces} from 'react-i18next';
 
 /**
  * @ignore
@@ -43,12 +49,32 @@ const Languages = [
  * @returns {jsx}
  * @constructor
  */
-const Header =()=> {
+const Header =({setPage, t})=> {
     const classes = useStyles();
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+
+    const handleClickListItem = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuItemClick = (event, index) => {
+        setSelectedIndex(index);
+        setPage(index)
+        setAnchorEl(null);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
 
     return (<div className={classes.header}>
         <Grid
             container
+            direction={'row'}
             alignItems="center"
         >
             <Grid item xs>
@@ -67,7 +93,40 @@ const Header =()=> {
                 </Box>
             </Grid>
         </Grid>
+        <div className={classes.root}>
+            <List component="nav" aria-label="Device settings">
+                <ListItem
+                    button
+                    aria-haspopup="true"
+                    aria-controls="lock-menu"
+                    aria-label="when device is locked"
+                    onClick={handleClickListItem}
+                >
+                    <ListItemText primary={t('Menu')}/>
+                </ListItem>
+            </List>
+            <Menu
+                id="lock-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+            >
+                {[
+                    t('Home'),
+                    t('About'),
+                ].map((option, index) => (
+                    <MenuItem
+                        key={option}
+                        selected={index === selectedIndex}
+                        onClick={(event) => handleMenuItemClick(event, index)}
+                    >
+                        {option}
+                    </MenuItem>
+                ))}
+            </Menu>
+        </div>
     </div>)
 };
 
-export default withWidth()(Header);
+export default withNamespaces()(Header);
