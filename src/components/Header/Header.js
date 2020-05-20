@@ -15,6 +15,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import {withNamespaces} from 'react-i18next';
+import PropTypes from "prop-types";
 
 /**
  * @ignore
@@ -46,6 +47,9 @@ const Languages = [
 
 /**
  * Header of the app
+ * @param args
+ * @param {function} args.setPage - hook function from the parent, needed to switch pages
+ * @param {function} args.t - translation function provided by i18n
  * @returns {jsx}
  * @constructor
  */
@@ -128,5 +132,10 @@ const Header =({setPage, t})=> {
         </div>
     </div>)
 };
+
+Header.propTypes = {
+    setPage: PropTypes.func,
+    t: PropTypes.func,
+}
 
 export default withNamespaces()(Header);

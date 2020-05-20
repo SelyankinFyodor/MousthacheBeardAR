@@ -1,7 +1,7 @@
 /**
  * calculating position of beard and moustache
- * @param args
  * @param {object} measure - coef
+ * @param args
  * @param {Array<{x:number, y:number}>} args.nose - nose coordinates
  * @param {Array<{x:number, y:number}>} args.lipsUp - up lips coordinates
  * @param {Array<{x:number, y:number}>} args.lipsDown - down lips coordinates
