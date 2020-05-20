@@ -56,7 +56,7 @@ const ResultArea = ({t}) => {
     useEffect(() => {
         const handleImage = async (image = FaceImg) => {
             await getFullFaceDescription(image, image.size).then(fDes => {
-                if (fDes.length === '0') {
+                if (fDes[0] === undefined) {
                     setError(true)
                 }
 
