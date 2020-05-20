@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
 
-const useStyles = makeStyles(() => ({
-  footer:{
-    height: "100px",
+const useStyles = makeStyles((theme) => ({
+  footer: {
+    padding: theme.spacing(3, 2),
+    marginTop: 'auto',
     lineHeightStep: "32px",
     border: "1px solid #000"
   }

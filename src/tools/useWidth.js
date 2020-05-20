@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 
 /**
  * hook of window width
@@ -7,12 +7,18 @@ import {useEffect, useState} from "react";
 export default () => {
     const isClient = typeof window === 'object';
 
-    const getSize = () => {
+    // const getSize = () => {
+    //     return {
+    //         width: isClient ? window.innerWidth : undefined,
+    //         height: isClient ? window.innerHeight : undefined
+    //     };
+    // }
+    const getSize = useCallback(() => {
         return {
             width: isClient ? window.innerWidth : undefined,
             height: isClient ? window.innerHeight : undefined
         };
-    }
+    },[isClient])
 
     const [windowSize, setWindowSize] = useState(getSize);
 
