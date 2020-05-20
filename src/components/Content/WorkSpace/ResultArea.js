@@ -14,14 +14,17 @@ const useStyles = makeStyles(() => ({
     grid: {
         lineHeightStep: "32px",
         border: "1px solid #000",
+        height: "100%"
     },
     text: {
         fontFamily: 'Tangerine'
     },
     error: {
+        fontFamily: 'Tangerine',
         backgroundColor:'#FF4500'
     }
 }));
+
 /**
  * @param {Object} args - destructing object
  * @param {function} args.t - translation function provided by i18n
@@ -117,7 +120,6 @@ const ResultArea = ({t}) => {
 
     useEffect(()=>{
         if (width.width <= 600){
-            console.log(width.width)
             setLayout([12,12])
             setdir('column')
         }
@@ -130,7 +132,6 @@ const ResultArea = ({t}) => {
     return (
         <Grid container direction={dir} className={classes.grid}>
             <Grid item
-                  className={classes.grid}
                   xs={layout[0]}
             >
                 <ResultCompose
@@ -148,6 +149,7 @@ const ResultArea = ({t}) => {
                   xs={layout[1]}
             >
                 <Grid item
+
                 >
                     <div className="upload-btn-wrapper">
                         <button className="btn">{t('upload photo')}</button>
@@ -158,7 +160,7 @@ const ResultArea = ({t}) => {
                     </div>
                 </Grid>
                 <Grid item
-                      className={[classes.text, classes.error]}
+                      className={classes.error}
                 >
                     {errorLoad ? t('Problems with face detection, select another photo') : <br/>}
                 </Grid>
