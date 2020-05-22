@@ -4,6 +4,7 @@ import useImage from 'use-image';
 import PropTypes from 'prop-types';
 import position from './positionСalculation'
 import useWidth from "../../../tools/useWidth";
+import {EmptyPng} from '../../../imports'
 
 /**
  *
@@ -100,7 +101,6 @@ const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords})=>{
         let newStageSize = 600 > (width.width) ? width.width - 20 : width.width/2 - 20;
         let newMeasure = get_coefficient(face, newStageSize);
         if (validateCoords()) {
-            // const layout = position(measure, {nose:nose, lipsUp:lips})
             const layout = position(measure, coords)
 
             setMoustachePos(layout.moustache)
@@ -109,6 +109,7 @@ const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords})=>{
         setStageSize(newStageSize);
         setMeasure(newMeasure);
         setMeasure(get_coefficient(face));
+        // eslint-disable-next-line
     }, [width, face])
 
     useEffect(()=>{
@@ -118,6 +119,7 @@ const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords})=>{
             setMoustachePos(layout.moustache)
             setBeardPos(layout.beard)
         }
+        // eslint-disable-next-line
     },[coords, measure]);
 
     return (
@@ -141,23 +143,23 @@ const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords})=>{
                             height={face.height*measure}
                             width={face.width*measure}
                         />
-                        {validateCoords() ?
-                            <Image image={moustache}
-                                   height={moustachePos.height}
-                                   width={moustachePos.width}
-                                   y={moustachePos.y}
-                                   x={moustachePos.x}
-                                   rotation={moustachePos.angle}
-                            />
-                            : null
-                        }
-                        {validateCoords() ?
+                        {(validateCoords() && BeardsUrl !== EmptyPng.beard)?
                             <Image image={beard}
                                    height={beardPos.height}
                                    width={beardPos.width}
                                    y={beardPos.y}
                                    x={beardPos.x}
                                    rotation={beardPos.angle}
+                            />
+                            : null
+                        }
+                        {(validateCoords() && MoustacheUrl !== EmptyPng.moustache)?
+                            <Image image={moustache}
+                                   height={moustachePos.height}
+                                   width={moustachePos.width}
+                                   y={moustachePos.y}
+                                   x={moustachePos.x}
+                                   rotation={moustachePos.angle}
                             />
                             : null
                         }

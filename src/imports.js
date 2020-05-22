@@ -22,6 +22,7 @@ import face006 from './static/images/faces/face006.jpg';
 // ********************************************************
 // Imports of moustache images
 // ********************************************************
+import moustacheEmpty from './static/images/moustaches/empty.png';
 import moustache001 from './static/images/moustaches/moustache001.png';
 import moustache002 from './static/images/moustaches/moustache002.png';
 import moustache003 from './static/images/moustaches/moustache003.png';
@@ -32,6 +33,7 @@ import moustache006 from './static/images/moustaches/moustache006.png';
 // ********************************************************
 // Imports of beards without moustache images
 // ********************************************************
+import beardEmpty from './static/images/beards/empty.png';
 import beard001 from './static/images/beards/beard001.png';
 import beard002 from './static/images/beards/beard002.png';
 import beard003 from './static/images/beards/beard003.png';
@@ -67,6 +69,7 @@ export const Faces = [
  * @type {[string]}
  */
 export const Moustaches = [
+  moustacheEmpty,
   moustache001,
   moustache002,
   moustache003,
@@ -80,6 +83,7 @@ export const Moustaches = [
  * @type {[string]}
  */
 export const Beards = [
+  beardEmpty,
   beard001,
   beard002,
   beard003,
@@ -95,4 +99,13 @@ export const Beards = [
  */
 export const Common ={
   logo: logo,
+};
+
+/**
+ * white png to blank image of moustache and beard
+ * @type {{beardEmpty, moustacheEmpty}}
+ */
+export const EmptyPng = {
+  beard: beardEmpty,
+  moustache: moustacheEmpty
 };
