@@ -1,7 +1,7 @@
 /**
  * calculating position of beard and moustache
- * @param {object} measure - coef
  * @param args
+ * @param {object} measure - coef
  * @param {Array<{x:number, y:number}>} args.nose - nose coordinates
  * @param {Array<{x:number, y:number}>} args.lipsUp - up lips coordinates
  * @param {Array<{x:number, y:number}>} args.lipsDown - down lips coordinates
@@ -16,8 +16,11 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval})=>{
      */
     const getMoustachePos = () => {
         let height_mul_coefficient = 4;
-        let width_mul_coefficient = 1.5;
-        let y_height_add_coefficient = 0.2
+        let width_mul_coefficient = 1.55;
+        let y_height_add_coefficient = 0.25
+        let y_width_add_coefficient = 1
+        let x_height_add_coefficient = 0.3
+        let x_width_add_coefficient = 1
         let angle = Math.atan((lipsUp[6].y - lipsUp[0].y)/(lipsUp[6].x - lipsUp[0].x) + (nose[4].y - nose[0].y)/(nose[4].x - nose[0].x)/2)
         let width = width_mul_coefficient * measure * Math.sqrt(
             (lipsUp[6].x - lipsUp[0].x)*(lipsUp[6].x - lipsUp[0].x)+(lipsUp[6].y - lipsUp[0].y)*(lipsUp[6].y - lipsUp[0].y))
@@ -25,10 +28,10 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval})=>{
             (lipsUp[3].y - nose[2].y)*(lipsUp[3].y - nose[2].y) + (lipsUp[3].x - nose[2].x)*(lipsUp[3].x - nose[2].x))
         let y = measure * ((nose.reduce((sum, cur)=>{return sum + cur.y}, 0) + lipsUp.reduce((sum, cur)=>{return sum + cur.y}, 0))/12)
             - height/2 * Math.cos(angle) * y_height_add_coefficient
-            - width/2 * Math.sin(angle)
+            - width/2 * Math.sin(angle) * y_width_add_coefficient
         let x = measure * ((nose.reduce((sum, cur)=>{return sum + cur.x}, 0) + lipsUp.reduce((sum, cur)=>{return sum + cur.x}, 0))/12)
-            - width/2 * Math.cos(angle)
-            + height/2 * Math.sin(angle)
+            - width/2 * Math.cos(angle) * x_width_add_coefficient
+            + height/2 * Math.sin(angle) * x_height_add_coefficient
         return {
             angle: angle*(180/Math.PI),
             width: width,
