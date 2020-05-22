@@ -73,7 +73,6 @@ describe('should get correct coordinates for photos', ()=>{
         moustache: coordinates.moustache,
         beard: coordinates.beard
       }
-
       expect(checkDistance(correct_set,exp_set)).toBe(true);
 
     }, 30000)
