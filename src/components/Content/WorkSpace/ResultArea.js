@@ -35,7 +35,7 @@ const ResultArea = ({t}) => {
     const [MoustacheImg, setMoustacheImg] = React.useState(Moustaches[0]);
 
     const [BeardsImg, setBeardsImg] = React.useState(Beards[0]);
-    const [errorLoad, setError] = React.useState(false);
+    const [errorLoad, setError] = React.useState("");
     const width = useWidth();
     const [layout, setLayout]=React.useState([6,3])
     const getDir = ()=>{
@@ -57,12 +57,12 @@ const ResultArea = ({t}) => {
         const handleImage = async (image = FaceImg) => {
             await getFullFaceDescription(image, image.size).then(fDes => {
                 if (fDes[0] === undefined) {
-                    setError(true)
+                    setError("Problems with face detection, select another photo")
                 }
 
                 if (fDes && fDes.lenght !== 0) {
                     getMustacheArea(fDes[0].landmarks.positions);
-                    setError(false)
+                    setError("")
                 }
             });
         };
@@ -101,7 +101,7 @@ const ResultArea = ({t}) => {
             }
             setCoords({
                 nose: range(31,35).map(el => area[el]),
-                lipsUp: range(48,54).map(el => area[el]),
+                lipsUp: range(48, 54).map(el => area[el]),
                 lipsDown: [48, 59, 58, 57, 56, 55, 54].map(el => area[el]),
                 oval: range(0,16).map(el => area[el])
             })
@@ -139,6 +139,7 @@ const ResultArea = ({t}) => {
                     BeardsUrl={BeardsImg}
                     ImageURl={FaceImg}
                     coords={coords}
+                    setError={setError}
                     className={classes.grid}
                 />
             </Grid >
@@ -162,7 +163,7 @@ const ResultArea = ({t}) => {
                 <Grid item
                       className={classes.error}
                 >
-                    {errorLoad ? t('Problems with face detection, select another photo') : <br/>}
+                    {errorLoad !== "" ? t(errorLoad) : <br/>}
                 </Grid>
                 <Grid item
                       className={classes.text}

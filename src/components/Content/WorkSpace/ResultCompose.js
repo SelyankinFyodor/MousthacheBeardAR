@@ -15,10 +15,11 @@ import {EmptyPng} from '../../../imports'
  * @param {string} args.MoustacheUrl - path for Moustache image
  * @param {string} args.BeardsUrl - path for Beard image
  * @param {{nose:Array<{x:number, y:number}>, lipsUp:Array<{x:number, y:number}>, lipsDown:Array<{x:number, y:number}>, oval:Array<{x:number, y:number}>}} args.coords - set of coords for calculate position
+ * @param {function} args.setError - function for error message
  * @returns {jsx}
  * @constructor
  */
-const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords})=>{
+const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords, setError})=>{
     const [face]=useImage(ImageURl);
     const [moustache]=useImage(MoustacheUrl);
     const [beard]=useImage(BeardsUrl);
@@ -61,6 +62,7 @@ const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords})=>{
         if (!face) return 1;
         return stage_size/(face.height > face.width ? face.height : face.width);
     },[stageSize, face]);
+
     //to adjust image size under stage
     const [measure, setMeasure]=useState(get_coefficient(face));
 
@@ -101,7 +103,7 @@ const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords})=>{
         let newStageSize = 600 > (width.width) ? width.width - 20 : width.width/2 - 20;
         let newMeasure = get_coefficient(face, newStageSize);
         if (validateCoords()) {
-            const layout = position(measure, coords)
+            const layout = position(measure, coords, setError)
 
             setMoustachePos(layout.moustache)
             setBeardPos(layout.beard)
@@ -114,8 +116,7 @@ const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords})=>{
 
     useEffect(()=>{
         if (validateCoords()) {
-            // const layout = position(measure, {nose:nose, lipsUp:lips})
-            const layout = position(measure, coords)
+            const layout = position(measure, coords, setError)
             setMoustachePos(layout.moustache)
             setBeardPos(layout.beard)
         }
@@ -174,6 +175,7 @@ ResultCompose.propTypes = {
     ImageURl: PropTypes.string,
     MoustacheUrl: PropTypes.string,
     BeardsUrl: PropTypes.string,
-    coords: PropTypes.object
+    coords: PropTypes.object,
+    setError: PropTypes.func
 }
 export default ResultCompose;
