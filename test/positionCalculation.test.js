@@ -39,8 +39,8 @@ describe('should get correct coordinates for photos', ()=>{
   });
 
   const delta = {
-    moustache: { x: 10, y: 10, width: 30, height: 20, angle: 2},
-    beard: {x: 10, y: 50, width: 20, height: 50, angle: 4}
+    moustache: { x: 20, y: 20, width: 50, height: 20, angle: 2},
+    beard: {x: 20, y: 50, width: 20, height: 60, angle: 4}
   }
 
   const checkDistance = (standard, model)=>{
@@ -58,27 +58,22 @@ describe('should get correct coordinates for photos', ()=>{
     return parentCheck('beard') && parentCheck('moustache')
   };
 
-
-  const doTest = (correct_set, photo) => {
-    return test(photo, async ()=>{
-      const img = await canvas.loadImage(__dirname +'/photos/' + photo + '.jpg')
+  describe('doTests', ()=>{
+    testSet.forEach(el => test(el.photo, async ()=>{
+      const img = await canvas.loadImage(__dirname +'/photos/' + el.photo + '.jpg')
       const landmarks = await faceApi.detectAllFaces(img).withFaceLandmarks();
 
       expect(landmarks.lenght).not.toBe(0)
 
-      const coordinates = position(correct_set.measure, fetch_landmarks(landmarks))
+      const coordinates = position(el.set.measure, fetch_landmarks(landmarks))
 
       const exp_set = {
-        measure: correct_set.measure,
+        measure: el.set.measure,
         moustache: coordinates.moustache,
         beard: coordinates.beard
       }
-      expect(checkDistance(correct_set,exp_set)).toBe(true);
+      expect(checkDistance(el.set,exp_set)).toBe(true);
 
-    }, 30000)
-  };
-
-  describe('doTests', ()=>{
-    testSet.forEach(el => doTest(el.set, el.photo))
+    }, 30000))
   });
 })
