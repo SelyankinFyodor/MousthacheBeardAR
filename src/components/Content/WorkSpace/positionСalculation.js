@@ -6,10 +6,11 @@
  * @param {Array<{x:number, y:number}>} args.lipsUp - up lips coordinates
  * @param {Array<{x:number, y:number}>} args.lipsDown - down lips coordinates
  * @param {Array<{x:number, y:number}>} args.oval - face border
+ * @param {function} setError -  function for error message
  * @returns {{beard: *,
  * moustache: {width: number, x: number, angle: number, y: number, height: number}}}
  */
-const position = (measure ,{nose, lipsUp, lipsDown, oval})=>{
+const position = (measure ,{nose, lipsUp, lipsDown, oval},  setError)=>{
     /**
      * moustache position calculating
      * @returns {{width: number, x: number, angle: number, y: number, height: number}}
@@ -17,36 +18,115 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval})=>{
     const getMoustachePos = () => {
         let height_mul_coefficient = 4;
         let width_mul_coefficient = 1.55;
-        let y_height_add_coefficient = 0.25
-        let y_width_add_coefficient = 1
-        let x_height_add_coefficient = 0.3
-        let x_width_add_coefficient = 1
+
+        const getWidth = () => Math.sqrt(
+                Math.max(
+                4*(lipsUp[3].x - lipsUp[0].x)*(lipsUp[3].x - lipsUp[0].x)+4*(lipsUp[3].y - lipsUp[0].y)*(lipsUp[3].y - lipsUp[0].y),
+                    4*(lipsUp[6].x - lipsUp[3].x)*(lipsUp[6].x - lipsUp[3].x)+4*(lipsUp[6].y - lipsUp[3].y)*(lipsUp[6].y - lipsUp[3].y)
+                    )
+        );
+
+        const getHeight = () => Math.sqrt(
+            Math.max((lipsUp[3].y - nose[2].y)*(lipsUp[3].y - nose[2].y) + (lipsUp[3].x - nose[2].x)*(lipsUp[3].x - nose[2].x))
+        );
+
+        let width = width_mul_coefficient * measure * getWidth();
+        let height =height_mul_coefficient * measure * getHeight()
         let angle = Math.atan((lipsUp[6].y - lipsUp[0].y)/(lipsUp[6].x - lipsUp[0].x) + (nose[4].y - nose[0].y)/(nose[4].x - nose[0].x)/2)
-        let width = width_mul_coefficient * measure * Math.sqrt(
-            (lipsUp[6].x - lipsUp[0].x)*(lipsUp[6].x - lipsUp[0].x)+(lipsUp[6].y - lipsUp[0].y)*(lipsUp[6].y - lipsUp[0].y))
-        let height =height_mul_coefficient * measure * Math.sqrt(
-            (lipsUp[3].y - nose[2].y)*(lipsUp[3].y - nose[2].y) + (lipsUp[3].x - nose[2].x)*(lipsUp[3].x - nose[2].x))
-        let y = measure * ((nose.reduce((sum, cur)=>{return sum + cur.y}, 0) + lipsUp.reduce((sum, cur)=>{return sum + cur.y}, 0))/12)
-            - height/2 * Math.cos(angle) * y_height_add_coefficient
-            - width/2 * Math.sin(angle) * y_width_add_coefficient
-        let x = measure * ((nose.reduce((sum, cur)=>{return sum + cur.x}, 0) + lipsUp.reduce((sum, cur)=>{return sum + cur.x}, 0))/12)
-            - width/2 * Math.cos(angle) * x_width_add_coefficient
-            + height/2 * Math.sin(angle) * x_height_add_coefficient
+
+        let rel = Math.abs(oval[15].x - nose[4].x) / Math.abs(oval[1].x - nose[0].x)
+
+        const getX = () => {
+            // full face
+            if (rel < 2  &&
+                rel > 0.5){
+                let x_height_add_coefficient = 0.3
+                let x_width_add_coefficient = 1
+
+                return measure * ((nose.reduce((sum, cur)=>{return sum + cur.x}, 0) + lipsUp.reduce((sum, cur)=>{return sum + cur.x}, 0))/12)
+                    - width/2 * Math.cos(angle) * x_width_add_coefficient
+                    + height/2 * Math.sin(angle) * x_height_add_coefficient
+            }
+            // face turned left
+            else if (rel >= 2){
+                let x_height_add_coefficient = 2
+                let x_width_add_coefficient = 0.1
+
+                return measure *
+                    ((nose[3].x
+                        + lipsUp[4].x + lipsUp[5].x + lipsUp[6].x)/4    )
+                    - height/2 * Math.cos(angle) * x_height_add_coefficient
+                    - width/2 * Math.sin(angle) * x_width_add_coefficient
+            }
+            // face turned right
+            else if (rel <= 0.5){
+                let x_height_add_coefficient = 2
+                let x_width_add_coefficient = 0.1
+
+                return measure *
+                    ((nose[3].x
+                        + lipsUp[4].x + lipsUp[5].x + lipsUp[6].x)/4    )
+                    - height/2 * Math.cos(angle) * x_height_add_coefficient
+                    - width/2 * Math.sin(angle) * x_width_add_coefficient
+            }
+        }
+
+        const getY = () => {
+            // full face
+            if (rel < 2  &&
+                rel > 0.5){
+                let y_height_add_coefficient = 0.25
+                let y_width_add_coefficient = 1
+
+                return measure * ((nose.reduce((sum, cur)=>{return sum + cur.y}, 0) + lipsUp.reduce((sum, cur)=>{return sum + cur.y}, 0))/12)
+                    - height/2 * Math.cos(angle) * y_height_add_coefficient
+                    - width/2 * Math.sin(angle) * y_width_add_coefficient
+            }
+            // face turned left
+            else if (rel >= 2){
+                let y_height_add_coefficient = 0.25
+                let y_width_add_coefficient = 1
+
+                return measure * ((nose.reduce((sum, cur)=>{return sum + cur.y}, 0) + lipsUp.reduce((sum, cur)=>{return sum + cur.y}, 0))/12)
+                    - height/2 * Math.cos(angle) * y_height_add_coefficient
+                    - width/2 * Math.sin(angle) * y_width_add_coefficient
+            }
+            // face turned right
+            else if (rel <= 0.5){
+                let y_height_add_coefficient = -0.1
+                let y_width_add_coefficient = 0.1
+
+                return measure * ((nose.reduce((sum, cur)=>{return sum + cur.y}, 0) + lipsUp.reduce((sum, cur)=>{return sum + cur.y}, 0))/12)
+                    - height/2 * Math.cos(angle) * y_height_add_coefficient
+                    - width/2 * Math.sin(angle) * y_width_add_coefficient
+            }
+        }
+
         return {
             angle: angle*(180/Math.PI),
             width: width,
             height: height,
-            y: y,
-            x: x
+            y: getY(),
+            x: getX()
         }
     }
 
-    // beard position calculating
     /**
      * beard position calculating
      * @returns {{width: number, x: number, angle: number, y: number, height: number}}
      */
     const getBeardPos = ()=>{
+        let rel = Math.abs(oval[15].x - nose[4].x) / Math.abs(oval[1].x - nose[0].x)
+        if (rel > 2 || rel < 0.5){
+            setError("problems with determining the position of the beard");
+            return {
+                angle: -1,
+                width: -1,
+                height: -1,
+                y: -1,
+                x: -1
+            }
+        }
         let height_mul_coefficient = 8
         let width_mul_coefficient = 1.33
         let y_height_add_coefficient = 0.63

@@ -30,9 +30,10 @@ const useStyles = makeStyles(() => ({
  * @constructor
  */
 const LanguageSelector = ({Languages , t}) => {
-    const changeLanguage = event => {
-        i18n.changeLanguage(event.target.value);
-        setLang(event.target.value);
+    const changeLanguage = el => {
+        let l = typeof el === "object" ? el.target.value : el
+        i18n.changeLanguage(l);
+        setLang(l);
     };
     const classes = useStyles();
     const [lang, setLang] = React.useState("ru");
