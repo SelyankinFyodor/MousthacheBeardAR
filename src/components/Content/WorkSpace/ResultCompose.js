@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react'
-import {Image, Layer, Stage} from 'react-konva';
+import {Image, Layer, Stage, Rect} from 'react-konva';
 import useImage from 'use-image';
 import PropTypes from 'prop-types';
 import position from './positionСalculation'
@@ -107,6 +107,22 @@ const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords, setError})=>{
 
             setMoustachePos(layout.moustache)
             setBeardPos(layout.beard)
+        }
+        else {
+            setMoustachePos({
+                height:0,
+                width:0,
+                x:0,
+                y:0,
+                angle:0
+            })
+            setBeardPos({
+                height:0,
+                width:0,
+                x:0,
+                y:0,
+                angle:0
+            })
         }
         setStageSize(newStageSize);
         setMeasure(newMeasure);

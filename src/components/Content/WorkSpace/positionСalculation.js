@@ -50,7 +50,7 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval},  setError)=>{
             // face turned left
             else if (rel >= 2){
                 let x_height_add_coefficient = 2
-                let x_width_add_coefficient = 0.1
+                let x_width_add_coefficient = -1
 
                 return measure *
                     ((nose[3].x
@@ -84,8 +84,8 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval},  setError)=>{
             }
             // face turned left
             else if (rel >= 2){
-                let y_height_add_coefficient = 0.25
-                let y_width_add_coefficient = 1
+                let y_height_add_coefficient = 0.1
+                let y_width_add_coefficient = 0.2
 
                 return measure * ((nose.reduce((sum, cur)=>{return sum + cur.y}, 0) + lipsUp.reduce((sum, cur)=>{return sum + cur.y}, 0))/12)
                     - height/2 * Math.cos(angle) * y_height_add_coefficient
@@ -117,22 +117,6 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval},  setError)=>{
      */
     const getBeardPos = ()=>{
         let rel = Math.abs(oval[15].x - nose[4].x) / Math.abs(oval[1].x - nose[0].x)
-        if (rel > 2 || rel < 0.5){
-            setError("problems with determining the position of the beard");
-            return {
-                angle: -1,
-                width: -1,
-                height: -1,
-                y: -1,
-                x: -1
-            }
-        }
-        let height_mul_coefficient = 8
-        let width_mul_coefficient = 1.33
-        let y_height_add_coefficient = 0.63
-        let y_width_add_coefficient = 1.2
-        let x_height_add_coefficient = 0.8
-        let x_width_add_coefficient = 1.02
         let angle = Math.atan((
             (lipsDown[0].y - lipsDown[6].y)/(lipsDown[0].x - lipsDown[6].x)
             + (oval[7].y - oval[9].y)/(oval[7].x - oval[9].x)
@@ -140,14 +124,70 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval},  setError)=>{
             + (oval[14].y - oval[2].y)/(oval[14].x - oval[2].x)
             + (oval[13].y - oval[3].y)/(oval[13].x - oval[3].x)
         )/5)
-        let width = width_mul_coefficient * measure*(oval[15].x - oval[1].x)
-        let height = height_mul_coefficient * measure*(oval[8].y- lipsDown[4].y)
-        let y = measure*(oval[7].y + oval[8].y + oval[9].y + lipsDown[3].y + lipsDown[4].y + lipsDown[5].y)/6
-            - height/2 * Math.cos(angle) * y_height_add_coefficient
-            - width/2 * Math.sin(angle) * y_width_add_coefficient
-        let x = measure*oval[8].x
+
+        let y_height_add_coefficient = 0.63
+        let y_width_add_coefficient = 1.2
+        let x_height_add_coefficient = 0.8
+        let x_width_add_coefficient = 1.02
+
+        const getHeight = () => {
+            if (rel < 2 && rel > 0.5){
+                let height_mul_coefficient = 8
+                return height_mul_coefficient * measure*(oval[8].y- lipsDown[4].y)
+            }
+            else if (rel >= 2){
+                let height_mul_coefficient = 8
+                return height_mul_coefficient * measure*(oval[8].y- lipsDown[4].y)
+            }
+            else if (rel <= 0.5){
+                let height_mul_coefficient = 8
+                return height_mul_coefficient * measure*(oval[8].y- lipsDown[4].y)
+            }
+        }
+
+        const getWidth = () => {
+            if (rel < 2 && rel > 0.5){
+                let width_mul_coefficient = 1.33
+                return width_mul_coefficient * measure*(oval[15].x - oval[1].x)
+            }
+            else if (rel >= 2){
+                let width_mul_coefficient = 1.1
+                return width_mul_coefficient * measure*(oval[15].x - oval[1].x)
+            }
+            else if (rel <= 0.5){
+                let width_mul_coefficient = 1.1
+                return width_mul_coefficient * measure*(oval[15].x - oval[1].x)
+            }
+        }
+        let width = getWidth()
+        let height = getHeight()
+        const getY = () => {
+            if (rel < 2 && rel > 0.5){
+                return measure*(oval[7].y + oval[8].y + oval[9].y + lipsDown[3].y + lipsDown[4].y + lipsDown[5].y)/6
+                    - height/2 * Math.cos(angle) * y_height_add_coefficient
+                    - width/2 * Math.sin(angle) * y_width_add_coefficient
+            }
+            else if (rel >= 2){
+                return measure*(oval[7].y + oval[8].y + oval[9].y + lipsDown[3].y + lipsDown[4].y + lipsDown[5].y)/6
+                    - height/2 * Math.cos(angle) * y_height_add_coefficient
+                    - width/2 * Math.sin(angle) * y_width_add_coefficient
+            }
+            else if (rel <= 0.5){
+                console.log('turn right')
+                return lipsUp[0].y
+                    - height/2 * Math.cos(angle) * y_height_add_coefficient
+                    - width/2 * Math.sin(angle) * y_width_add_coefficient
+            }
+        }
+
+        const getX = ()=> {
+            return measure*oval[8].x
             - width/2 * Math.cos(angle) * x_width_add_coefficient
             + height/2 * Math.sin(angle) * x_height_add_coefficient
+        }
+
+        let y = getY()
+        let x = getX()
         return {
             angle: angle*(180/Math.PI),
             width: width,
