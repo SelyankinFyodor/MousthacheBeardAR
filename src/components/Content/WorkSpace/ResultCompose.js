@@ -105,7 +105,13 @@ const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords})=>{
         let newMeasure = get_coefficient(face, newStageSize);
         if (validateCoords()) {
             const layout = position(measure, coords)
-
+            if (debug_mode) {
+                console.log("newMeasure: " + measure)
+                console.log("layout.beard")
+                console.log(layout.beard)
+                console.log("layout.moustache")
+                console.log(layout.moustache)
+            }
             setMoustachePos(layout.moustache)
             setBeardPos(layout.beard)
         }
@@ -134,6 +140,13 @@ const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords})=>{
     useEffect(()=>{
         if (validateCoords()) {
             const layout = position(measure, coords)
+            if (debug_mode) {
+                console.log("newMeasure: " + measure)
+                console.log("layout.beard")
+                console.log(layout.beard)
+                console.log("layout.moustache")
+                console.log(layout.moustache)
+            }
             setMoustachePos(layout.moustache)
             setBeardPos(layout.beard)
         }
