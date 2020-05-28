@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {getFullFaceDescription, loadModels} from './face-api-func';
+import {getFullFaceDescription, loadModels} from '../../../tools/face-api-func';
 import ResultCompose from "./ResultCompose";
 import {withNamespaces} from "react-i18next";
 import useWidth from "../../../tools/useWidth";
@@ -55,7 +55,7 @@ const ResultArea = ({t}) => {
 
     useEffect(() => {
         const handleImage = async (image = FaceImg) => {
-            await getFullFaceDescription(image, image.size).then(fDes => {
+            await getFullFaceDescription(image).then(fDes => {
                 if (fDes[0] === undefined) {
                     setError("Problems with face detection, select another photo")
                 }
@@ -139,7 +139,6 @@ const ResultArea = ({t}) => {
                     BeardsUrl={BeardsImg}
                     ImageURl={FaceImg}
                     coords={coords}
-                    setError={setError}
                     className={classes.grid}
                 />
             </Grid >

@@ -5,7 +5,7 @@ const fs = require('fs');
 const canvas = require("canvas")
 const {Canvas, Image, ImageData} = canvas;
 
-import position from '../src/components/Content/WorkSpace/positionСalculation'
+import position from '../src/tools/positionСalculation'
 
 faceApi.env.monkeyPatch({fetch, Canvas, Image, ImageData});
 

@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react'
 import {Image, Layer, Stage, Rect} from 'react-konva';
 import useImage from 'use-image';
 import PropTypes from 'prop-types';
-import position from './positionСalculation'
+import position from '../../../tools/positionСalculation'
 import useWidth from "../../../tools/useWidth";
 import {EmptyPng} from '../../../imports'
 
@@ -15,11 +15,10 @@ import {EmptyPng} from '../../../imports'
  * @param {string} args.MoustacheUrl - path for Moustache image
  * @param {string} args.BeardsUrl - path for Beard image
  * @param {{nose:Array<{x:number, y:number}>, lipsUp:Array<{x:number, y:number}>, lipsDown:Array<{x:number, y:number}>, oval:Array<{x:number, y:number}>}} args.coords - set of coords for calculate position
- * @param {function} args.setError - function for error message
  * @returns {jsx}
  * @constructor
  */
-const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords, setError})=>{
+const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords})=>{
     const [face]=useImage(ImageURl);
     const [moustache]=useImage(MoustacheUrl);
     const [beard]=useImage(BeardsUrl);
@@ -103,7 +102,7 @@ const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords, setError})=>{
         let newStageSize = 600 > (width.width) ? width.width - 20 : width.width/2 - 20;
         let newMeasure = get_coefficient(face, newStageSize);
         if (validateCoords()) {
-            const layout = position(measure, coords, setError)
+            const layout = position(measure, coords)
 
             setMoustachePos(layout.moustache)
             setBeardPos(layout.beard)
@@ -132,7 +131,7 @@ const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords, setError})=>{
 
     useEffect(()=>{
         if (validateCoords()) {
-            const layout = position(measure, coords, setError)
+            const layout = position(measure, coords)
             setMoustachePos(layout.moustache)
             setBeardPos(layout.beard)
         }

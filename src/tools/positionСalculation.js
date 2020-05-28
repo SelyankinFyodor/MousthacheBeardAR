@@ -6,11 +6,10 @@
  * @param {Array<{x:number, y:number}>} args.lipsUp - up lips coordinates
  * @param {Array<{x:number, y:number}>} args.lipsDown - down lips coordinates
  * @param {Array<{x:number, y:number}>} args.oval - face border
- * @param {function} setError -  function for error message
  * @returns {{beard: *,
  * moustache: {width: number, x: number, angle: number, y: number, height: number}}}
  */
-const position = (measure ,{nose, lipsUp, lipsDown, oval},  setError)=>{
+const position = (measure ,{nose, lipsUp, lipsDown, oval})=>{
     /**
      * moustache position calculating
      * @returns {{width: number, x: number, angle: number, y: number, height: number}}
