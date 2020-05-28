@@ -124,65 +124,136 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval})=>{
             + (oval[13].y - oval[3].y)/(oval[13].x - oval[3].x)
         )/5)
 
-        let y_height_add_coefficient = 0.63
-        let y_width_add_coefficient = 1.2
-        let x_height_add_coefficient = 0.8
-        let x_width_add_coefficient = 1.02
-
         const getHeight = () => {
             if (rel < 2 && rel > 0.5){
-                let height_mul_coefficient = 8
+                let height_mul_coefficient = 6
                 return height_mul_coefficient * measure*(oval[8].y- lipsDown[4].y)
             }
             else if (rel >= 2){
-                let height_mul_coefficient = 8
+                let height_mul_coefficient = 6
                 return height_mul_coefficient * measure*(oval[8].y- lipsDown[4].y)
             }
             else if (rel <= 0.5){
-                let height_mul_coefficient = 8
+                let height_mul_coefficient = 6
                 return height_mul_coefficient * measure*(oval[8].y- lipsDown[4].y)
             }
         }
 
         const getWidth = () => {
             if (rel < 2 && rel > 0.5){
-                let width_mul_coefficient = 1.33
+                let width_mul_coefficient = 1
                 return width_mul_coefficient * measure*(oval[15].x - oval[1].x)
             }
             else if (rel >= 2){
-                let width_mul_coefficient = 1.1
+                let width_mul_coefficient = 1
                 return width_mul_coefficient * measure*(oval[15].x - oval[1].x)
             }
             else if (rel <= 0.5){
-                let width_mul_coefficient = 1.1
+                let width_mul_coefficient = 1
                 return width_mul_coefficient * measure*(oval[15].x - oval[1].x)
             }
         }
+
         let width = getWidth()
         let height = getHeight()
+
         const getY = () => {
+            let y_height_add_coefficient
+            let y_width_add_coefficient
+            //full face
             if (rel < 2 && rel > 0.5){
-                return measure*(oval[7].y + oval[8].y + oval[9].y + lipsDown[3].y + lipsDown[4].y + lipsDown[5].y)/6
-                    - height/2 * Math.cos(angle) * y_height_add_coefficient
-                    - width/2 * Math.sin(angle) * y_width_add_coefficient
+                if (angle > 0){
+                    y_height_add_coefficient = 0.19
+                    y_width_add_coefficient = 0.2
+                }
+                else if (angle < 0){
+
+                    y_height_add_coefficient = 0.1
+                    y_width_add_coefficient = 0.2
+                }
+                return measure*(oval[7].y + oval[8].y + oval[9].y)/3
+                    - height * Math.cos(angle) * y_height_add_coefficient
+                    - width * Math.sin(angle) * y_width_add_coefficient
             }
+            //turn left
             else if (rel >= 2){
-                return measure*(oval[7].y + oval[8].y + oval[9].y + lipsDown[3].y + lipsDown[4].y + lipsDown[5].y)/6
-                    - height/2 * Math.cos(angle) * y_height_add_coefficient
-                    - width/2 * Math.sin(angle) * y_width_add_coefficient
+
+                if (angle > 0){
+                    y_height_add_coefficient = 0.15
+                    y_width_add_coefficient = 0.3
+                }
+                else if (angle < 0){
+                    y_height_add_coefficient = 0.15
+                    y_width_add_coefficient = 0.3
+                }
+
+                return measure * oval[7].y
+                    - height * Math.cos(angle) * y_height_add_coefficient
+                    - width * Math.sin(angle) * y_width_add_coefficient
             }
+            //turn right
             else if (rel <= 0.5){
-                console.log('turn right')
-                return lipsUp[0].y
-                    - height/2 * Math.cos(angle) * y_height_add_coefficient
-                    - width/2 * Math.sin(angle) * y_width_add_coefficient
+                if (angle > 0){
+                    y_height_add_coefficient = 0.2
+                    y_width_add_coefficient = -0.3
+                }
+                else if (angle < 0){
+                    y_height_add_coefficient = 0
+                    y_width_add_coefficient = -0.3
+                }
+
+                return measure * oval[9].y
+                    - height * Math.cos(angle) * y_height_add_coefficient
+                    - width * Math.sin(angle) * y_width_add_coefficient
             }
         }
 
         const getX = ()=> {
-            return measure*oval[8].x
-            - width/2 * Math.cos(angle) * x_width_add_coefficient
-            + height/2 * Math.sin(angle) * x_height_add_coefficient
+            let x_height_add_coefficient
+            let x_width_add_coefficient
+            //full face
+            if (rel < 2 && rel > 0.5){
+                if (angle > 0){
+                    x_height_add_coefficient = 0
+                    x_width_add_coefficient = 0.5
+                }
+                else if (angle < 0) {
+                    x_height_add_coefficient = 0
+                    x_width_add_coefficient = 0.5
+                }
+                return measure*oval[8].x
+                    - width * Math.cos(angle) * x_width_add_coefficient
+                    + height * Math.sin(angle) * x_height_add_coefficient
+            }
+            //turn left
+            else if (rel >= 2){
+                if (angle > 0){
+                    x_height_add_coefficient = 0
+                    x_width_add_coefficient = 0.5
+                }
+                else if (angle < 0) {
+                    x_height_add_coefficient = 0
+                    x_width_add_coefficient = 0.4
+                }
+                return measure*oval[7].x
+                    - width * Math.cos(angle) * x_width_add_coefficient
+                    + height * Math.sin(angle) * x_height_add_coefficient
+            }
+            //turn right
+            else if (rel <= 0.5){
+
+                if (angle > 0){
+                    x_height_add_coefficient = 0
+                    x_width_add_coefficient = 0.5
+                }
+                else if (angle < 0) {
+                    x_height_add_coefficient = 0
+                    x_width_add_coefficient = 0.57
+                }
+                return measure*oval[8].x
+                    - width * Math.cos(angle) * x_width_add_coefficient
+                    + height * Math.sin(angle) * x_height_add_coefficient
+            }
         }
 
         let y = getY()
