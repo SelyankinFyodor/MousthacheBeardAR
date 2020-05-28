@@ -90,7 +90,6 @@ export const Beards = [
   beard004,
   beard005,
   beard006,
-  beard007,
 ]
 
 /**
