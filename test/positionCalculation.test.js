@@ -39,8 +39,8 @@ describe('should get correct coordinates for photos', ()=>{
   });
 
   const delta = {
-    moustache: { x: 20, y: 20, width: 50, height: 20, angle: 2},
-    beard: {x: 20, y: 50, width: 20, height: 60, angle: 4}
+    moustache: { x: 20, y: 20, width: 20, height: 20, angle: 2},
+    beard: {x: 20, y: 50, width: 20, height: 20, angle: 4}
   }
 
   const checkDistance = (standard, model)=>{
