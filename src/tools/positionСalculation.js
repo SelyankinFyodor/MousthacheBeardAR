@@ -60,7 +60,6 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval})=>{
             // face turned left
             else if (rel >= 2){
                 if (angle > 0){
-                    console.log(angle)
                     x_height_add_coefficient = 0
                     x_width_add_coefficient = 0.5
                 }
@@ -209,7 +208,7 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval})=>{
                 }
                 else if (angle < 0){
 
-                    y_height_add_coefficient = 0.1
+                    y_height_add_coefficient = 0.15
                     y_width_add_coefficient = 0.2
                 }
                 return measure*(oval[7].y + oval[8].y + oval[9].y)/3

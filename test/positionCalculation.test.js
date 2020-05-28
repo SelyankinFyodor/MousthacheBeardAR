@@ -48,7 +48,6 @@ describe('should get correct coordinates for photos', ()=>{
     const parentCheck = (parentKey)=>{
       for (let key in standard[parentKey]){
         if (Math.abs(standard[parentKey][key] - model[parentKey][key]) > delta[parentKey][key]){
-          console.log(key+": " + standard[parentKey][key] + " vs " + model[parentKey][key])
           return false
         }
       }
