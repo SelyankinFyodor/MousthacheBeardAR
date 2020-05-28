@@ -42,7 +42,7 @@ const ResultArea = ({t}) => {
         return width.width <= 600 ? 'column' : 'row'
     }
 
-    const [dir, setdir]=React.useState(getDir())
+    const [dir, setDir]=React.useState(getDir())
     const classes = useStyles();
 
     const [coords, setCoords] = React.useState({
@@ -93,7 +93,6 @@ const ResultArea = ({t}) => {
         }
     }, [FaceImg, models]);
 
-
     const getMustacheArea = area => {
         if (area){
             const range = (begin, end)=>{
@@ -121,11 +120,11 @@ const ResultArea = ({t}) => {
     useEffect(()=>{
         if (width.width <= 600){
             setLayout([12,12])
-            setdir('column')
+            setDir('column')
         }
         else{
             setLayout([6,3])
-            setdir('row')
+            setDir('row')
         }
     }, [width])
 
