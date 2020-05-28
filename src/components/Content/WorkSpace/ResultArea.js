@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {getFullFaceDescription, loadModels} from './face-api-func';
+import {getFullFaceDescription, loadModels} from '../../../tools/face-api-func';
 import ResultCompose from "./ResultCompose";
 import {withNamespaces} from "react-i18next";
 import useWidth from "../../../tools/useWidth";
@@ -42,7 +42,7 @@ const ResultArea = ({t}) => {
         return width.width <= 600 ? 'column' : 'row'
     }
 
-    const [dir, setdir]=React.useState(getDir())
+    const [dir, setDir]=React.useState(getDir())
     const classes = useStyles();
 
     const [coords, setCoords] = React.useState({
@@ -55,7 +55,7 @@ const ResultArea = ({t}) => {
 
     useEffect(() => {
         const handleImage = async (image = FaceImg) => {
-            await getFullFaceDescription(image, image.size).then(fDes => {
+            await getFullFaceDescription(image).then(fDes => {
                 if (fDes[0] === undefined) {
                     setError("Problems with face detection, select another photo")
                 }
@@ -93,7 +93,6 @@ const ResultArea = ({t}) => {
         }
     }, [FaceImg, models]);
 
-
     const getMustacheArea = area => {
         if (area){
             const range = (begin, end)=>{
@@ -121,11 +120,11 @@ const ResultArea = ({t}) => {
     useEffect(()=>{
         if (width.width <= 600){
             setLayout([12,12])
-            setdir('column')
+            setDir('column')
         }
         else{
             setLayout([6,3])
-            setdir('row')
+            setDir('row')
         }
     }, [width])
 
@@ -139,7 +138,6 @@ const ResultArea = ({t}) => {
                     BeardsUrl={BeardsImg}
                     ImageURl={FaceImg}
                     coords={coords}
-                    setError={setError}
                     className={classes.grid}
                 />
             </Grid >

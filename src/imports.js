@@ -40,7 +40,6 @@ import beard003 from './static/images/beards/beard003.png';
 import beard004 from './static/images/beards/beard004.png';
 import beard005 from './static/images/beards/beard005.png';
 import beard006 from './static/images/beards/beard006.png';
-import beard007 from './static/images/beards/beard007.png';
 
 /**
  * dict of Icons and languages
@@ -90,7 +89,6 @@ export const Beards = [
   beard004,
   beard005,
   beard006,
-  beard007,
 ]
 
 /**
