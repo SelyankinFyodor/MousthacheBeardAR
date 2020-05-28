@@ -19,6 +19,8 @@ import {EmptyPng} from '../../../imports'
  * @constructor
  */
 const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords})=>{
+    const debug_mode = false
+
     const [face]=useImage(ImageURl);
     const [moustache]=useImage(MoustacheUrl);
     const [beard]=useImage(BeardsUrl);
@@ -168,6 +170,15 @@ const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords})=>{
                                    rotation={beardPos.angle}
                             />
                             : null
+                        }
+                        {debug_mode && validateCoords() ?
+                            [
+                                coords.oval.map(el => <Rect key={measure*el.x} fill={'red'} x ={measure*el.x} y={measure*el.y} width={3} height={3}/>),
+                                coords.nose.map(el => <Rect key={measure*el.x} fill={'red'} x ={measure*el.x} y={measure*el.y} width={3} height={3}/>),
+                                coords.lipsUp.map(el => <Rect key={measure*el.x} fill={'red'} x ={measure*el.x} y={measure*el.y} width={3} height={3}/>),
+                                coords.lipsDown.map(el => <Rect key={measure*el.x} fill={'red'} x ={measure*el.x} y={measure*el.y} width={3} height={3}/>)
+                            ]
+                            :null
                         }
                         {(validateCoords() && MoustacheUrl !== EmptyPng.moustache)?
                             <Image image={moustache}
