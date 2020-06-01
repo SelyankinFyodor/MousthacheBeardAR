@@ -40,6 +40,10 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval})=>{
         let width = getWidth();
         let height = getHeight()
 
+        console.log('Moustache')
+        console.log(angle)
+        console.log(rel)
+
         const getX = () => {
             let x_height_add_coefficient = 0
             let x_width_add_coefficient = 0
@@ -111,11 +115,11 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval})=>{
             else if (rel >= 2){
                 if (angle > 0){
                     y_height_add_coefficient = 0.2
-                    y_width_add_coefficient = 0
+                    y_width_add_coefficient = 0.3
                 }
                 else if (angle < 0){
-                    y_height_add_coefficient = 0
-                    y_width_add_coefficient = 0
+                    y_height_add_coefficient = 0.2
+                    y_width_add_coefficient = 0.6
                 }
 
                 return measure * ((nose[2].y + lipsUp[3].y)/2)
@@ -164,6 +168,9 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval})=>{
             + (oval[13].y - oval[3].y)/(oval[13].x - oval[3].x)
         )/5)
 
+        console.log('Beard')
+        console.log(angle)
+        console.log(rel)
         const getHeight = () => {
             if (rel < 2 && rel > 0.5){
                 let height_mul_coefficient = 6
@@ -180,17 +187,18 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval})=>{
         }
 
         const getWidth = () => {
+            console.log((oval[15].x - oval[1].x)/(oval[9].x - oval[7].x))
             if (rel < 2 && rel > 0.5){
-                let width_mul_coefficient = 1
-                return width_mul_coefficient * measure*(oval[15].x - oval[1].x)
+                let width_mul_coefficient = 3.1
+                return width_mul_coefficient * measure*(oval[9].x - oval[7].x)
             }
             else if (rel >= 2){
-                let width_mul_coefficient = 1
-                return width_mul_coefficient * measure*(oval[15].x - oval[1].x)
+                let width_mul_coefficient = 2.9
+                return width_mul_coefficient * measure*(oval[9].x - oval[7].x)
             }
             else if (rel <= 0.5){
-                let width_mul_coefficient = 1
-                return width_mul_coefficient * measure*(oval[15].x - oval[1].x)
+                let width_mul_coefficient = 2.9
+                return width_mul_coefficient * measure*(oval[9].x - oval[7].x)
             }
         }
 
@@ -204,12 +212,12 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval})=>{
             if (rel < 2 && rel > 0.5){
                 if (angle > 0){
                     y_height_add_coefficient = 0.19
-                    y_width_add_coefficient = 0.2
+                    y_width_add_coefficient = 0.5
                 }
                 else if (angle < 0){
 
                     y_height_add_coefficient = 0.15
-                    y_width_add_coefficient = 0.2
+                    y_width_add_coefficient = 0.5
                 }
                 return measure*(oval[7].y + oval[8].y + oval[9].y)/3
                     - height * Math.cos(angle) * y_height_add_coefficient
@@ -219,7 +227,7 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval})=>{
             else if (rel >= 2){
 
                 if (angle > 0){
-                    y_height_add_coefficient = 0.15
+                    y_height_add_coefficient = 0.1
                     y_width_add_coefficient = 0.3
                 }
                 else if (angle < 0){
@@ -234,8 +242,8 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval})=>{
             //turn right
             else if (rel <= 0.5){
                 if (angle > 0){
-                    y_height_add_coefficient = 0.2
-                    y_width_add_coefficient = -0.3
+                    y_height_add_coefficient = 0.25
+                    y_width_add_coefficient = -0.2
                 }
                 else if (angle < 0){
                     y_height_add_coefficient = 0
@@ -254,11 +262,11 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval})=>{
             //full face
             if (rel < 2 && rel > 0.5){
                 if (angle > 0){
-                    x_height_add_coefficient = 0
+                    x_height_add_coefficient = 0.2
                     x_width_add_coefficient = 0.5
                 }
                 else if (angle < 0) {
-                    x_height_add_coefficient = 0
+                    x_height_add_coefficient = 0.4
                     x_width_add_coefficient = 0.5
                 }
                 return measure*oval[8].x
