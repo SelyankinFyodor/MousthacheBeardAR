@@ -40,10 +40,6 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval})=>{
         let width = getWidth();
         let height = getHeight()
 
-        console.log('Moustache')
-        console.log(angle)
-        console.log(rel)
-
         const getX = () => {
             let x_height_add_coefficient = 0
             let x_width_add_coefficient = 0
@@ -168,9 +164,6 @@ const position = (measure ,{nose, lipsUp, lipsDown, oval})=>{
             + (oval[13].y - oval[3].y)/(oval[13].x - oval[3].x)
         )/5)
 
-        console.log('Beard')
-        console.log(angle)
-        console.log(rel)
         const getHeight = () => {
             if (rel < 2 && rel > 0.5){
                 let height_mul_coefficient = 6
