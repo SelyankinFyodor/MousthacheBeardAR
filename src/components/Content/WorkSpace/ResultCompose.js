@@ -19,7 +19,7 @@ import {EmptyPng} from '../../../imports'
  * @constructor
  */
 const ResultCompose = ({ImageURl, MoustacheUrl, BeardsUrl, coords})=>{
-    const debug_mode = true
+    const debug_mode = false
 
     const [face]=useImage(ImageURl);
     const [moustache]=useImage(MoustacheUrl);
