@@ -9,7 +9,7 @@
 // Imports
 // ********************************************************
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import Header from './components/Header/Header';
 import Content from './components/Content/Content';
@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
     const [page, setPage] = React.useState(0)
     const classes = useStyles();
+    useEffect(()=>{document.title='MoustacheBeard AR'}, [])
     return (
         <div className={classes.root}>
             <Header setPage={setPage}/>
