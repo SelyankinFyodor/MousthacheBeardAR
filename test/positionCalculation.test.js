@@ -5,7 +5,7 @@ const fs = require('fs');
 const canvas = require("canvas")
 const {Canvas, Image, ImageData} = canvas;
 
-import position from '../src/components/Content/WorkSpace/positionСalculation'
+import position from '../src/tools/positionСalculation'
 
 faceApi.env.monkeyPatch({fetch, Canvas, Image, ImageData});
 
@@ -39,8 +39,8 @@ describe('should get correct coordinates for photos', ()=>{
   });
 
   const delta = {
-    moustache: { x: 20, y: 20, width: 50, height: 20, angle: 2},
-    beard: {x: 20, y: 50, width: 20, height: 60, angle: 4}
+    moustache: { x: 20, y: 20, width: 20, height: 20, angle: 2},
+    beard: {x: 20, y: 50, width: 20, height: 20, angle: 4}
   }
 
   const checkDistance = (standard, model)=>{
@@ -48,7 +48,6 @@ describe('should get correct coordinates for photos', ()=>{
     const parentCheck = (parentKey)=>{
       for (let key in standard[parentKey]){
         if (Math.abs(standard[parentKey][key] - model[parentKey][key]) > delta[parentKey][key]){
-          console.log(key+": " + standard[parentKey][key] + " vs " + model[parentKey][key])
           return false
         }
       }
